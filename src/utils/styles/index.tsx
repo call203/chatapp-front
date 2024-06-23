@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { PageProps } from './styleTypes'
 export const InputLabel = styled.label`
   color: #8f8f8f;
   font-size: 14px;
@@ -42,9 +43,9 @@ export const Button = styled.button`
   }
 `
 
-export const Page = styled.div`
+export const Page = styled.div<PageProps>`
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: ${(props) => props.display};
+  justify-content: ${(props) => props.justifyContent};
+  align-items: ${(props) => props.alignItems};
 `
