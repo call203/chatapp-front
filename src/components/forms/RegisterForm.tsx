@@ -6,15 +6,22 @@ import {
   InputLabel,
 } from '../../utils/styles'
 import styles from './index.module.scss'
+import { CreateUserParams } from '../../utils/types'
+import { postRegisterUser } from '../../utils/api'
 export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm<CreateUserParams>()
 
-  const onSubmit = () => {
-    console.log('hi')
+  const onSubmit = async (data: CreateUserParams) => {
+    console.log(data)
+    try {
+      await postRegisterUser(data)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -33,7 +40,7 @@ export const RegisterForm = () => {
           <InputField
             type="text"
             id="firstName"
-            {...register('Frist Name', { required: 'First Name is required' })}
+            {...register('firstName', { required: 'First Name is required' })}
           ></InputField>
         </InputContainer>
         <InputContainer>
@@ -41,13 +48,17 @@ export const RegisterForm = () => {
           <InputField
             type="text"
             id="lastName"
-            {...register('Last Name', { required: 'Last Name is required' })}
+            {...register('lastName', { required: 'Last Name is required' })}
           ></InputField>
         </InputContainer>
       </section>
       <InputContainer>
         <InputLabel>Password</InputLabel>
-        <InputField type="password" id="password"></InputField>
+        <InputField
+          type="password"
+          id="password"
+          {...register('password', { required: 'Password is required' })}
+        ></InputField>
       </InputContainer>
       <Button>Sign Up</Button>
     </form>
