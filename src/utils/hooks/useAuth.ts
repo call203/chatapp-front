@@ -11,12 +11,9 @@ export const useAuth = () => {
     getAuthUser()
       .then(({ data }: any) => {
         updateAuthUser(data)
-        console.log('hooks')
-        console.log(user)
         setTimeout(() => setLoading(false), 1000)
       })
       .catch((err) => {
-        console.log(err)
         setTimeout(() => setLoading(false), 1000)
       })
     return () => {

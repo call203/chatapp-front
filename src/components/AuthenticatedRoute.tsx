@@ -7,8 +7,7 @@ export const AuthenticatedRoute: FC<React.PropsWithChildren> = ({
 }) => {
   const location = useLocation()
   const { loading, user } = useAuth()
-  console.log(user)
-  console.log('hi~')
+  
   if (loading) {
     return <div>loading...</div>
   }
