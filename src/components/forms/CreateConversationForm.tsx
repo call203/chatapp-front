@@ -7,7 +7,7 @@ export const CreateConversationForm = () => {
         <div className="bg-b_131313 rounded-md py-4 px-5 mb-2">
           <div className="text-sm mb-1 text-gray-200">Recipient</div>
           <input
-            className="bg-inherit text-white text-base "
+            className="bg-inherit text-white text-bas w-full"
             style={{ border: 'none', outline: 'none' }}
           />
         </div>

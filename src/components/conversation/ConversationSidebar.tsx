@@ -1,14 +1,23 @@
-import { FC, useState } from 'react'
+import { FC, useContext, useState } from 'react'
 import addChatImg from '../../Assets/AddChatImg.png'
-import { ConversationType } from '../../utils/styles/types'
+import { ConversationType } from '../../utils/types'
 import { useNavigate } from 'react-router-dom'
 import { CreateConversationModal } from '../Modals/CreateConversationModal'
+import { AuthContext } from '../../utils/context/AuthContext'
 
 type Props = {
   conversations: ConversationType[]
 }
 export const ConversationSideBar: FC<Props> = ({ conversations }) => {
+  const navigate = useNavigate()
+  const { user } = useContext(AuthContext)
   const [showModal, setShowModal] = useState(false)
+
+  const getDisplayUser = (conversation: ConversationType) => {
+    return conversation.creator.id === user?.id
+      ? conversation.recipient
+      : conversation.creator
+  }
 
   return (
     <>
@@ -22,14 +31,22 @@ export const ConversationSideBar: FC<Props> = ({ conversations }) => {
         </div>
 
         <div className="overflow-y-auto flex-grow">
-          {conversations.map(() => {
+          {conversations.map((conversation) => {
             return (
-              <div className="overflow-y-auto">
-                <div className="py-3 pl-8 flex align-middle border-b border-slate-700">
+              <div
+                className="overflow-y-auto"
+                key={conversation.id}
+                onClick={() => navigate(`/conversations/${conversation.id}`)}
+              >
+                <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
                   <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
                   <div className="ml-5">
-                    <div className="text-sm font-bold">Name</div>
-                    <div className="text-sm">Text</div>
+                    <div className="text-sm font-bold">
+                      {`${getDisplayUser(conversation).firstName}`}
+                      {`  ${getDisplayUser(conversation).lastName}`}
+                    </div>
+                    <div className="text-sm text-gray-300 ">Text</div>
                   </div>
                 </div>
               </div>

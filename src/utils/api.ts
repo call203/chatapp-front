@@ -12,3 +12,9 @@ export const postLoginUser = (data: LoginParams) =>
 
 export const getAuthUser = () =>
   axios.get(`${REACT_APP_API_URL}/auth/status`, config)
+
+export const getConversations = () =>
+  axios.get(`${REACT_APP_API_URL}/conversations`, config)
+
+export const getConversationMessages = (id: number) =>
+  axios.get(`${REACT_APP_API_URL}/messages/${id}`, config)

@@ -9,6 +9,7 @@ import { AuthenticatedRoute } from './components/AuthenticatedRoute'
 import { AuthContext } from './utils/context/AuthContext'
 import { User } from './utils/types'
 import { useState } from 'react'
+import { ConversationChannelPage } from './pages/ConversationChannelPage'
 
 function App() {
   const [user, setUser] = useState<User>()
@@ -25,7 +26,10 @@ function App() {
             </AuthenticatedRoute>
           }
         ></Route>
-        <Route path="conversation/:id" element={<h1>id</h1>}></Route>
+        <Route
+          path="conversations/:id"
+          element={<ConversationChannelPage />}
+        ></Route>
       </Routes>
     </AuthContext.Provider>
   )
