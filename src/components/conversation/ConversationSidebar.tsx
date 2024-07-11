@@ -22,7 +22,7 @@ export const ConversationSideBar: FC<Props> = ({ conversations }) => {
   return (
     <>
       {showModal && <CreateConversationModal setShowModal={setShowModal} />}
-      <div className="w-3/12 bg-b_1f1f1f h-screen flex flex-col">
+      <div className="w-3/12 bg-b_1f1f1f flex flex-col">
         <div className=" h-16 flex justify-between items-center px-5 border-b border-slate-700">
           <p className="font-semibold text-base">Conversations</p>
           <button onClick={() => setShowModal(!showModal)}>
@@ -33,23 +33,178 @@ export const ConversationSideBar: FC<Props> = ({ conversations }) => {
         <div className="overflow-y-auto flex-grow">
           {conversations.map((conversation) => {
             return (
-              <div
-                className="overflow-y-auto"
-                key={conversation.id}
-                onClick={() => navigate(`/conversations/${conversation.id}`)}
-              >
-                <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
-                  <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+              <>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
 
-                  <div className="ml-5">
-                    <div className="text-sm font-bold">
-                      {`${getDisplayUser(conversation).firstName}`}
-                      {`  ${getDisplayUser(conversation).lastName}`}
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
                     </div>
-                    <div className="text-sm text-gray-300 ">Text</div>
                   </div>
                 </div>
-              </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="overflow-y-auto"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
+                    <div className="h-9 w-9 bg-red-400 rounded-full"></div>
+
+                    <div className="ml-5">
+                      <div className="text-sm font-bold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">Text</div>
+                    </div>
+                  </div>
+                </div>
+              </>
             )
           })}
         </div>

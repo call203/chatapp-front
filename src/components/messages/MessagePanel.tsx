@@ -17,22 +17,21 @@ export const MesasgePanel: FC<Props> = ({ messages }) => {
   }
 
   return (
-    <div className="bg-b_1f1f1f h-full w-full flex flex-col">
-      <div className="sticky top-0">
-        <MessagePanerHeader />
-      </div>
+    <div className="flex flex-col h-full">
+      <MessagePanerHeader />
 
-      <div className="flex flex-col flex-grow">
-        <div className="flex-grow overflow-y-auto">
-          <MessageContainer messages={messages} />
-        </div>
-        <div className="sticky bottom-0">
-          <MessageInputField
-            content={content}
-            setContent={setContent}
-            sendMessage={sendMessage}
-          />
-        </div>
+      <div
+        className="overflow-y-auto no-scrollbar flex-1 px-5"
+        style={{ maxHeight: 'calc(100vh - 140px)' }}
+      >
+        <MessageContainer messages={messages} />
+      </div>
+      <div className="fixed bottom-0 w-full">
+        <MessageInputField
+          content={content}
+          setContent={setContent}
+          sendMessage={sendMessage}
+        />
       </div>
     </div>
   )

@@ -11,7 +11,10 @@ export const MessageInputField: FC<Props> = ({
   sendMessage,
 }) => {
   return (
-    <form onSubmit={sendMessage} className="bg-b_131313 py-4 px-5 w-full ">
+    <form
+      onSubmit={sendMessage}
+      className="bg-b_131313 px-4 pt-4 pb-7 m-0 w-full "
+    >
       <input
         className="bg-inherit text-white w-full text-sm"
         placeholder="Write to Anyone"

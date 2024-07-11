@@ -25,11 +25,9 @@ function App() {
               <ConversationPage></ConversationPage>
             </AuthenticatedRoute>
           }
-        ></Route>
-        <Route
-          path="conversations/:id"
-          element={<ConversationChannelPage />}
-        ></Route>
+        >
+          <Route path=":id" element={<ConversationChannelPage />} />
+        </Route>
       </Routes>
     </AuthContext.Provider>
   )
