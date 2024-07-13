@@ -21,7 +21,7 @@ export const MesasgePanel: FC<Props> = ({ messages }) => {
       <MessagePanerHeader />
 
       <div
-        className="overflow-y-auto no-scrollbar flex-1 px-5"
+        className="overflow-y-auto flex flex-col-reverse no-scrollbar flex-1 px-5 "
         style={{ maxHeight: 'calc(100vh - 140px)' }}
       >
         <MessageContainer messages={messages} />

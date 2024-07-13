@@ -2,7 +2,7 @@ import { FC, useContext, useEffect } from 'react'
 import { MessageType, User } from '../../utils/types'
 import { Form, useParams } from 'react-router-dom'
 import { AuthContext } from '../../utils/context/AuthContext'
-import { formatRelative } from 'date-fns'
+import { compareAsc, formatRelative } from 'date-fns'
 
 type Props = {
   messages: MessageType[]
@@ -49,23 +49,24 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
   const { id } = useParams()
   const formatMessage = () => {
     return (
-      <div className="flex-col-reverse">
-        {messages.map((m, index, arr) => {
-          let nextIndex = index + 1
-          const currentMessage = arr[index]
-          const nextMessage = arr[nextIndex]
-          if (arr.length === nextIndex || index == 0)
-            return <FormattedMessage user={user} message={m} key={m.id} />
-          if (currentMessage.author.id !== nextMessage.author.id) {
-            return <FormattedMessage user={user} message={m} key={m.id} />
-          }
-          return (
-            <div className="flex ml-11">
-              <div className="ml-4">
-                <div className="py-1 text-xsm">{m.content} </div>
+      <div>
+        {messages.reverse().map((m, index, arr) => {
+          let prevIndex = index - 1
+          let prev = arr[prevIndex]
+
+          if (
+            index > 0 &&
+            prev.author.id === m.author.id &&
+            prev.createdAt.substring(0, prev.createdAt.lastIndexOf(':')) ===
+              m.createdAt.substring(0, m.createdAt.lastIndexOf(':'))
+          ) {
+            return (
+              <div className="ml-10">
+                <div className="ml-5 py-1 text-xsm">{m.content}</div>
               </div>
-            </div>
-          )
+            )
+          }
+          return <FormattedMessage user={user} message={m} key={m.id} />
         })}
       </div>
     )
