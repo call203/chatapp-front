@@ -4,6 +4,7 @@ import { MessagePanerHeader } from './MessagePanelHeader'
 import { MessageType } from '../../utils/types'
 import { useParams } from 'react-router-dom'
 import { MessageContainer } from './MessageContainer'
+import { postNewMessage } from '../../utils/api'
 
 type Props = {
   messages: MessageType[]
@@ -14,6 +15,15 @@ export const MesasgePanel: FC<Props> = ({ messages }) => {
   const { id } = useParams()
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (!id || !content) return
+    const conversationId = parseInt(id)
+    try {
+      await postNewMessage({ conversationId, content })
+      setContent('')
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -22,7 +32,7 @@ export const MesasgePanel: FC<Props> = ({ messages }) => {
 
       <div
         className="overflow-y-auto flex flex-col-reverse no-scrollbar flex-1 px-5 "
-        style={{ maxHeight: 'calc(100vh - 140px)' }}
+        style={{ maxHeight: 'calc(100vh - 160px)' }}
       >
         <MessageContainer messages={messages} />
       </div>

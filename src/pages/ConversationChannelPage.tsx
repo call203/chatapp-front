@@ -18,6 +18,7 @@ export const ConversationChannelPage = () => {
       .catch((err) => {
         console.log(err)
       })
+    console.log(id)
   }, [id])
 
   useEffect(() => {

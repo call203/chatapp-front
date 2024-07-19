@@ -44,3 +44,13 @@ export type MessageEventPayload = {
   author: User
   content: string
 }
+
+export type MessageCreateParams = {
+  conversationId: number
+  content: string
+}
+
+export type ConversationCreateParams = {
+  recipientId: number
+  content?: string
+}

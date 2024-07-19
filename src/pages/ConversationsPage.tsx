@@ -1,27 +1,28 @@
 import { Outlet, useParams } from 'react-router-dom'
 import { ConversationSideBar } from '../components/conversation/ConversationSidebar'
-import { Page } from '../utils/styles'
-import { useEffect, useState } from 'react'
-import { ConversationType } from '../utils/types'
-import { getConversations } from '../utils/api'
+import { useEffect } from 'react'
 import { ConversationPanel } from '../components/conversation/ConversationPanel'
-import { MessagePanerHeader } from '../components/messages/MessagePanelHeader'
+import { useDispatch } from 'react-redux'
+import { AppDispatch, RootState } from '../store'
+import { fetchConversationThunk } from '../store/conversationSlice'
+import { useSelector } from 'react-redux'
 
 export const ConversationPage = () => {
   const { id } = useParams()
-  const [conversations, setConversations] = useState<ConversationType[]>([])
+  const dispatch = useDispatch<AppDispatch>()
+  const conversations = useSelector((state: RootState) => state.conversation)
 
   useEffect(() => {
-    getConversations()
-      .then(({ data }) => {
-        setConversations(data)
-      })
-      .catch((err) => console.log(err))
+    dispatch(fetchConversationThunk())
   }, [])
+
   return (
     <div className="flex flex-col h-screen">
       <div className="flex flex-1 overflow-y-auto">
-        <ConversationSideBar conversations={conversations} />
+        <ConversationSideBar
+          conversations={conversations.conversations}
+          loading={conversations.loading}
+        />
 
         <div className="flex-1">
           {!id && <ConversationPanel />}

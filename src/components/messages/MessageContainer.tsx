@@ -61,7 +61,7 @@ export const MessageContainer: FC<Props> = ({ messages }) => {
               m.createdAt.substring(0, m.createdAt.lastIndexOf(':'))
           ) {
             return (
-              <div className="ml-10">
+              <div className="ml-10" key={m.id}>
                 <div className="ml-5 py-1 text-xsm">{m.content}</div>
               </div>
             )

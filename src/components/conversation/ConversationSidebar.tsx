@@ -4,15 +4,16 @@ import { ConversationType } from '../../utils/types'
 import { useNavigate } from 'react-router-dom'
 import { CreateConversationModal } from '../Modals/CreateConversationModal'
 import { AuthContext } from '../../utils/context/AuthContext'
+import { Loading } from '../loading'
 
 type Props = {
   conversations: ConversationType[]
+  loading: Boolean
 }
-export const ConversationSideBar: FC<Props> = ({ conversations }) => {
+export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
   const [showModal, setShowModal] = useState(false)
-
   const getDisplayUser = (conversation: ConversationType) => {
     return conversation.creator.id === user?.id
       ? conversation.recipient
@@ -31,6 +32,7 @@ export const ConversationSideBar: FC<Props> = ({ conversations }) => {
         </div>
 
         <div className="overflow-y-auto flex-grow">
+          {loading && <Loading />}
           {conversations.map((conversation) => {
             return (
               <>
