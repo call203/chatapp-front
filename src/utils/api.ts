@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import {
-  ConversationCreateParams,
+  CreateConversationParams,
   CreateUserParams,
   LoginParams,
   MessageCreateParams,
@@ -27,5 +27,5 @@ export const getConversationMessages = (id: number) =>
 export const postNewMessage = (data: MessageCreateParams) =>
   axios.post(`${REACT_APP_API_URL}/messages`, data, config)
 
-export const postNewConversation = (data: ConversationCreateParams) =>
+export const postNewConversation = (data: CreateConversationParams) =>
   axios.post(`${REACT_APP_API_URL}/conversations`, data, config)

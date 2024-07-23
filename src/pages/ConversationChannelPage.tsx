@@ -1,38 +1,38 @@
 import { useEffect, useState } from 'react'
 import { MesasgePanel } from '../components/messages/MessagePanel'
-import { MessageEventPayload, MessageType } from '../utils/types'
+import {
+  ConversationType,
+  MessageEventPayload,
+  MessageType,
+} from '../utils/types'
 import { getConversationMessages } from '../utils/api'
 import { useParams } from 'react-router-dom'
 import { socket } from '../utils/context/SocketContext'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../store'
+import { fetchMessagesThunk } from '../store/messageSlice'
+import { addConversation } from '../store/conversationSlice'
 
 export const ConversationChannelPage = () => {
-  const [message, setMessage] = useState<MessageType[]>([])
   const { id } = useParams()
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    const conversationId = parseInt(id!)
-    getConversationMessages(conversationId)
-      .then(({ data }) => {
-        setMessage(data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    console.log(id)
+    const conversationId = id!
+    socket.emit('onConversationJoin', { conversationId })
+    socket.on('userJoin', () => {
+      console.log('userJoin')
+    })
+    socket.on('userLeave', () => {
+      console.log('userLeave')
+    })
+
+    return () => {
+      socket.emit('onConversationLeave', { conversationId })
+      socket.off('userJoin')
+      socket.off('userLeave')
+    }
   }, [id])
 
-  useEffect(() => {
-    socket.on('connected', () => console.log('Connected'))
-    socket.on('onMessage', (payload: MessageEventPayload) => {
-      console.log('Message Received')
-      const { conversation, ...message } = payload
-      setMessage((prev) => [message, ...prev])
-    })
-    return () => {
-      socket.off('disconnected')
-      socket.off('off Message')
-    }
-  }, [])
-
-  return <MesasgePanel messages={message}></MesasgePanel>
+  return <MesasgePanel></MesasgePanel>
 }

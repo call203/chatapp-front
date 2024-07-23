@@ -3,10 +3,8 @@ import { MessageType, User } from '../../utils/types'
 import { Form, useParams } from 'react-router-dom'
 import { AuthContext } from '../../utils/context/AuthContext'
 import { compareAsc, formatRelative } from 'date-fns'
-
-type Props = {
-  messages: MessageType[]
-}
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 type FormatteMessageProps = {
   user?: User
@@ -44,16 +42,21 @@ export const FormattedMessage: FC<FormatteMessageProps> = ({
   )
 }
 
-export const MessageContainer: FC<Props> = ({ messages }) => {
+export const MessageContainer = () => {
   const { user } = useContext(AuthContext)
   const { id } = useParams()
+  const messages = useSelector((state: RootState) => state.message.messages)
+
   const formatMessage = () => {
+    const msg = messages.find((cm) => cm.conversationId === parseInt(id!))
+    if (!msg) return []
+    const msgReverse = [...msg?.messages].reverse()
+
     return (
       <div>
-        {messages.reverse().map((m, index, arr) => {
+        {msgReverse.map((m, index, arr) => {
           let prevIndex = index - 1
           let prev = arr[prevIndex]
-
           if (
             index > 0 &&
             prev.author.id === m.author.id &&

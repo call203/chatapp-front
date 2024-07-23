@@ -1,8 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
 import conversation from './conversationSlice'
+import message from './messageSlice'
 import logger from 'redux-logger'
 export const store = configureStore({
-  reducer: { conversation },
+  reducer: { conversation, message },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(logger),
   devTools: true,

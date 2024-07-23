@@ -6,11 +6,9 @@ import { useParams } from 'react-router-dom'
 import { MessageContainer } from './MessageContainer'
 import { postNewMessage } from '../../utils/api'
 
-type Props = {
-  messages: MessageType[]
-}
+type Props = {}
 
-export const MesasgePanel: FC<Props> = ({ messages }) => {
+export const MesasgePanel: FC<Props> = ({}) => {
   const [content, setContent] = useState('')
   const { id } = useParams()
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +32,7 @@ export const MesasgePanel: FC<Props> = ({ messages }) => {
         className="overflow-y-auto flex flex-col-reverse no-scrollbar flex-1 px-5 "
         style={{ maxHeight: 'calc(100vh - 160px)' }}
       >
-        <MessageContainer messages={messages} />
+        <MessageContainer />
       </div>
       <div className="fixed bottom-0 w-full">
         <MessageInputField

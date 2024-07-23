@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ConversationType } from '../utils/types'
-import { getConversations } from '../utils/api'
-import { create } from 'domain'
+import { ConversationType, CreateConversationParams } from '../utils/types'
+import { getConversations, postNewConversation } from '../utils/api'
 
 interface ConversationState {
   conversations: ConversationType[]
@@ -20,17 +19,19 @@ export const fetchConversationThunk = createAsyncThunk(
   },
 )
 
+export const createConversationThunk = createAsyncThunk(
+  'conversations/create',
+  async (data: CreateConversationParams) => {
+    return postNewConversation(data)
+  },
+)
+
 export const conversationSlice = createSlice({
   name: 'conversations',
   initialState,
   reducers: {
     addConversation: (state, action: PayloadAction<ConversationType>) => {
-      const conversation = action.payload
-      const index = state.conversations.findIndex(
-        (i) => i.id === conversation.id,
-      )
-      state.conversations.splice(index, 1)
-      state.conversations.unshift()
+      state.conversations.unshift(action.payload)
     },
   },
   extraReducers: (builder) => {
@@ -42,8 +43,11 @@ export const conversationSlice = createSlice({
       .addCase(fetchConversationThunk.pending, (state, action) => {
         state.loading = true
       })
+      .addCase(createConversationThunk.fulfilled, (state, action) => {
+        console.log(action.payload.data)
+        state.conversations.unshift(action.payload.data)
+      })
   },
 })
-
 export const { addConversation } = conversationSlice.actions
 export default conversationSlice.reducer
