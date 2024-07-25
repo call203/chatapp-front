@@ -12,6 +12,7 @@ import { SocketContext, socket } from './utils/context/SocketContext'
 import { Socket } from 'socket.io-client'
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from './store'
+import { AppPage } from './pages/AppPage'
 
 type Props = {
   user?: User
@@ -41,15 +42,17 @@ function App() {
       <Routes>
         <Route path="/signup" element={<RegisterPage />}></Route>
         <Route path="/login" element={<LoginPage />}></Route>
-        <Route
-          path="/conversations"
-          element={
-            <AuthenticatedRoute>
-              <ConversationPage></ConversationPage>
-            </AuthenticatedRoute>
-          }
-        >
-          <Route path=":id" element={<ConversationChannelPage />} />
+        <Route element={<AuthenticatedRoute children={<AppPage />} />}>
+          <Route
+            path="/conversations"
+            element={
+              <AuthenticatedRoute>
+                <ConversationPage></ConversationPage>
+              </AuthenticatedRoute>
+            }
+          >
+            <Route path=":id" element={<ConversationChannelPage />} />
+          </Route>
         </Route>
       </Routes>
     </AppWithProviders>
