@@ -1,10 +1,12 @@
 import { FC, useContext, useState } from 'react'
-import addChatImg from '../../Assets/AddChatImg.png'
 import { ConversationType } from '../../utils/types'
 import { useNavigate } from 'react-router-dom'
 import { CreateConversationModal } from '../Modals/CreateConversationModal'
 import { AuthContext } from '../../utils/context/AuthContext'
 import { Loading } from '../loading'
+import { MainButton } from '../MainButton'
+import defaultImg from '../../Assets/DefaultProfile.png'
+import searchImg from '../../Assets/Search.png'
 
 type Props = {
   conversations: ConversationType[]
@@ -23,37 +25,50 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
   return (
     <>
       {showModal && <CreateConversationModal setShowModal={setShowModal} />}
-      <div className="w-3/12 bg-b_1f1f1f flex flex-col">
-        <div className=" h-16 flex justify-between items-center px-5 border-b border-slate-700">
-          <p className="font-semibold text-base">Conversations</p>
-          <button onClick={() => setShowModal(!showModal)}>
-            <img src={addChatImg} alt="add chat" className="w-7 h-7" />
-          </button>
+      <div className="w-80 flex flex-col bg-backgroun_dark2 py-10 px-5">
+        <div className="flex flex-col">
+          {/** Conversation Search Input */}
+          <div className="flex flex-row justify-center items-center bg-black">
+            <input
+              style={{ border: 'none', outline: 'none' }}
+              placeholder="Search Chat"
+              className="bg-black h-12 rounded-md py-4 pl-5 w-full"
+            />
+            <div className="px-4">
+              <img src={searchImg} className="w-6 h-5" />
+            </div>
+          </div>
+          {/** Create Conversation Button */}
+          <div className="py-6">
+            <MainButton>Start new Chat</MainButton>
+          </div>
         </div>
 
         <div className="overflow-y-auto flex-grow">
           {loading && <Loading />}
+          {/** Conversations */}
           {conversations.map((conversation) => {
             return (
-              <div
-                className="overflow-y-auto"
-                key={conversation.id}
-                onClick={() => navigate(`/conversations/${conversation.id}`)}
-              >
-                <div className="py-3 pl-8 flex align-middle border-b border-slate-700 ">
-                  <div className="h-9 w-9 bg-red-400 rounded-full"></div>
-
-                  <div className="ml-5">
-                    <div className="text-sm font-bold">
-                      {`${getDisplayUser(conversation).firstName}`}
-                      {`  ${getDisplayUser(conversation).lastName}`}
-                    </div>
-                    <div className="text-sm text-gray-300 ">
-                      {conversation.lastMessageSent?.content}
+              <>
+                <div
+                  className="overflow-y-auto py-4"
+                  key={conversation.id}
+                  onClick={() => navigate(`/conversations/${conversation.id}`)}
+                >
+                  <div className="flex align-middle">
+                    <img src={defaultImg} className="w-10 h-10" />
+                    <div className="ml-5">
+                      <div className="text-sm font-semibold">
+                        {`${getDisplayUser(conversation).firstName}`}
+                        {`  ${getDisplayUser(conversation).lastName}`}
+                      </div>
+                      <div className="text-sm text-gray-300 ">
+                        {conversation.lastMessageSent?.content}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </>
             )
           })}
         </div>

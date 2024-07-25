@@ -5,7 +5,7 @@ export const MainButton: FC<PropsWithChildren> = ({ children }) => {
     <>
       <button
         type="submit"
-        className="py-4 text-center bg-b_2b09ff w-full text-lg rounded-md font-semibold"
+        className="py-3 text-center bg-my_blue w-full text-lg rounded-md font-semibold"
       >
         {children}
       </button>
