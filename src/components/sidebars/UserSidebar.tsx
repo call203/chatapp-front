@@ -27,7 +27,7 @@ export const UserSidebar = () => {
                 className={`flex justify-center items-center py-5`}
               >
                 <img
-                  className="w-10"
+                  className="w-9"
                   src={getImage(item.pathname)}
                   alt={item.id}
                 />

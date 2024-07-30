@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react'
 import { MessageInputField } from './MessageInputField'
-import { MessagePanerHeader } from './MessagePanelHeader'
-import { MessageType } from '../../utils/types'
+import { MessagePanelHeader } from './MessagePanelHeader'
 import { useParams } from 'react-router-dom'
 import { MessageContainer } from './MessageContainer'
 import { postNewMessage } from '../../utils/api'
@@ -26,7 +25,7 @@ export const MesasgePanel: FC<Props> = ({}) => {
 
   return (
     <div className="flex flex-col h-full">
-      <MessagePanerHeader />
+      <MessagePanelHeader />
 
       <div
         className="overflow-y-auto flex flex-col-reverse no-scrollbar flex-1 px-5 "

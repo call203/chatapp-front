@@ -1,6 +1,12 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit'
 import { ConversationType, CreateConversationParams } from '../utils/types'
 import { getConversations, postNewConversation } from '../utils/api'
+import { RootState } from '.'
 
 interface ConversationState {
   conversations: ConversationType[]
@@ -49,5 +55,14 @@ export const conversationSlice = createSlice({
       })
   },
 })
+const selectedConversations = (state: RootState) =>
+  state.conversation.conversations
+const selectedConversationsId = (state: RootState, id: number) => id
+export const selectConversationById = createSelector(
+  [selectedConversations, selectedConversationsId],
+  (conversations, conversationId) =>
+    conversations.find((c) => c.id === conversationId),
+)
+
 export const { addConversation } = conversationSlice.actions
 export default conversationSlice.reducer
