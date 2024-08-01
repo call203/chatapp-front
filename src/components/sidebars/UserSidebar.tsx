@@ -1,7 +1,10 @@
 import LogoutImg from '../../Assets/Logout.png'
 import DefaultProfile from '../../Assets/DefaultProfile.png'
 import { userSidebarItems } from '../../utils/constants'
+import { postLogoutUser } from '../../utils/api'
+import { useNavigate } from 'react-router-dom'
 export const UserSidebar = () => {
+  const navigate = useNavigate()
   const getImage = (path: string) => {
     try {
       return require(`../../Assets${path}`)
@@ -9,6 +12,16 @@ export const UserSidebar = () => {
       console.error(`Error loading image at path: ../../Assets${path}`, err)
       return null
     }
+  }
+
+  const logoutUser = () => {
+    postLogoutUser().then(() => {
+      try {
+        navigate('/login')
+      } catch (err) {
+        console.log(err)
+      }
+    })
   }
 
   return (
@@ -38,7 +51,11 @@ export const UserSidebar = () => {
       </div>
       {/** Logout */}
       <div className={'flex justify-center items-center'}>
-        <img src={LogoutImg} className="w-8 rotate-180" />
+        <img
+          onClick={() => logoutUser()}
+          src={LogoutImg}
+          className="w-8 rotate-180"
+        />
       </div>
     </div>
   )

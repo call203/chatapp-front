@@ -22,12 +22,17 @@ export const ConversationPage = () => {
     dispatch(fetchConversationThunk())
   }, [])
   useEffect(() => {
-    const coversationId = parseInt(id!)
-    dispatch(fetchMessagesThunk(coversationId))
+    if (id) {
+      const coversationId = parseInt(id)
+      dispatch(fetchMessagesThunk(coversationId))
+    }
   }, [id])
 
   useEffect(() => {
     const conversationId = id!
+    socket.on('connected', (data) => {
+      console.log('Connected to Websocket')
+    })
 
     socket.on('onMessage', (payload: MessageEventPayload) => {
       const { conversation, message } = payload

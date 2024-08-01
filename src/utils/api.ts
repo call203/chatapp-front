@@ -15,6 +15,9 @@ export const postRegisterUser = (data: CreateUserParams) =>
 export const postLoginUser = (data: LoginParams) =>
   axios.post(`${REACT_APP_API_URL}/auth/login`, data, config)
 
+export const postLogoutUser = () =>
+  axios.post(`${REACT_APP_API_URL}/auth/logout`, {}, config)
+
 export const getAuthUser = () =>
   axios.get(`${REACT_APP_API_URL}/auth/status`, config)
 

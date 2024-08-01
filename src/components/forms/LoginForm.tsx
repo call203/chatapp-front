@@ -21,6 +21,7 @@ export const LoginForm = () => {
     try {
       await postLoginUser(data)
       navigate('/conversations')
+      window.location.reload()
     } catch (err) {
       console.log(err)
     }
