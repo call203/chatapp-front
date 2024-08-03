@@ -47,6 +47,11 @@ export type MessageEventPayload = {
   conversation: ConversationType
 }
 
+export type ConversationLastMessageUpdate = {
+  id: number
+  content: string
+}
+
 export type MessageCreateParams = {
   conversationId: number
   content: string

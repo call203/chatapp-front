@@ -4,7 +4,12 @@ import {
   createSlice,
   PayloadAction,
 } from '@reduxjs/toolkit'
-import { ConversationType, CreateConversationParams } from '../utils/types'
+import {
+  ConversationLastMessageUpdate,
+  ConversationType,
+  CreateConversationParams,
+  lastMessageType,
+} from '../utils/types'
 import { getConversations, postNewConversation } from '../utils/api'
 import { RootState } from '.'
 
@@ -39,7 +44,23 @@ export const conversationSlice = createSlice({
     addConversation: (state, action: PayloadAction<ConversationType>) => {
       state.conversations.unshift(action.payload)
     },
+    setConversationLastMessage: (
+      state,
+      action: PayloadAction<ConversationLastMessageUpdate>,
+    ) => {
+      const index = state.conversations.findIndex(
+        (c) => c.id === action.payload.id,
+      )
+
+      if (index !== -1) {
+        const conversation = state.conversations[index]
+        if (conversation.lastMessageSent) {
+          conversation.lastMessageSent.content = action.payload.content
+        }
+      }
+    },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchConversationThunk.fulfilled, (state, action) => {
@@ -64,5 +85,8 @@ export const selectConversationById = createSelector(
     conversations.find((c) => c.id === conversationId),
 )
 
-export const { addConversation } = conversationSlice.actions
+export const {
+  addConversation,
+  setConversationLastMessage,
+} = conversationSlice.actions
 export default conversationSlice.reducer
