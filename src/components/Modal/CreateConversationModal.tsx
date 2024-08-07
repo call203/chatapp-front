@@ -1,7 +1,7 @@
-import { ModalBody, ModalContainer, ModalHeader } from '.'
 import { CreateConversationForm } from '../forms/CreateConversationForm'
 import closeImg from '../../Assets/CloseImg.png'
 import { Dispatch, FC, createRef, useState } from 'react'
+import { ModalBody, ModalContainer, ModalHeader } from '.'
 
 type Props = {
   setShowModal: Dispatch<React.SetStateAction<boolean>>

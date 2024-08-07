@@ -1,7 +1,7 @@
 import { FC, useContext, useState } from 'react'
 import { ConversationType } from '../../utils/types'
 import { useNavigate } from 'react-router-dom'
-import { CreateConversationModal } from '../Modals/CreateConversationModal'
+import { CreateConversationModal } from '../Modal/CreateConversationModal'
 import { AuthContext } from '../../utils/context/AuthContext'
 import { Loading } from '../loading'
 import { MainButton } from '../MainButton'

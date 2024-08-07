@@ -3,7 +3,11 @@ import DefaultProfile from '../../Assets/DefaultProfile.png'
 import { userSidebarItems } from '../../utils/constants'
 import { postLogoutUser } from '../../utils/api'
 import { useNavigate } from 'react-router-dom'
-export const UserSidebar = () => {
+
+type Props = {
+  handleProfileContainer: () => void
+}
+export const UserSidebar = ({ handleProfileContainer }: Props) => {
   const navigate = useNavigate()
   const getImage = (path: string) => {
     try {
@@ -29,7 +33,11 @@ export const UserSidebar = () => {
       <div className="flex flex-col w-full">
         {/** Default Profile */}
         <div className="flex justify-center items-center">
-          <img src={DefaultProfile} className="w-12 mb-8" />
+          <img
+            src={DefaultProfile}
+            className="w-12 mb-8"
+            onClick={() => handleProfileContainer()}
+          />
         </div>
         {/** Menu */}
         <div>
