@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom'
 import { getRecipientFromConversation } from '../../utils/helper'
-import { ConversationSideBar } from '../conversation/ConversationSidebar'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { selectConversationById } from '../../store/conversationSlice'
 import { useContext } from 'react'
 import { AuthContext } from '../../utils/context/AuthContext'
+import DefaultProfile from '../../Assets/DefaultProfile.png'
 
 export const MessagePanelHeader = () => {
   const { id } = useParams()
@@ -17,7 +17,10 @@ export const MessagePanelHeader = () => {
 
   return (
     <div className="bg-b_131313 flex items-center py-3 px-5 text-white">
-      <div className="h-11 w-11 bg-red-400 rounded-full mr-5"></div>
+      <img
+        src={user?.profile?.image ? user.profile.image : DefaultProfile}
+        className="w-11 h-11  rounded-full mr-5"
+      />
       <div>
         {recipient?.firstName} {recipient?.lastName}
       </div>

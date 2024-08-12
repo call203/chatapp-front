@@ -14,7 +14,19 @@ import { Provider as ReduxProvider } from 'react-redux'
 import { store } from './store'
 import { AppPage } from './pages/AppPage'
 import { ToastContainer } from 'react-toastify'
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        backgroundColor: '#1a1a1a',
+        color: '#fff',
+        fontFamily: `'Inter', sans-serif`,
+      },
+    },
+  },
+})
 type Props = {
   user?: User
   setUser: React.Dispatch<React.SetStateAction<User | undefined>>
@@ -40,23 +52,25 @@ function App() {
   const [user, setUser] = useState<User>()
   return (
     <AppWithProviders user={user} setUser={setUser} socket={socket}>
-      <Routes>
-        <Route path="/signup" element={<RegisterPage />}></Route>
-        <Route path="/login" element={<LoginPage />}></Route>
-        <Route element={<AuthenticatedRoute children={<AppPage />} />}>
-          <Route
-            path="/conversations"
-            element={
-              <AuthenticatedRoute>
-                <ConversationPage></ConversationPage>
-              </AuthenticatedRoute>
-            }
-          >
-            <Route path=":id" element={<ConversationChannelPage />} />
+      <ChakraProvider theme={theme}>
+        <Routes>
+          <Route path="/signup" element={<RegisterPage />}></Route>
+          <Route path="/login" element={<LoginPage />}></Route>
+          <Route element={<AuthenticatedRoute children={<AppPage />} />}>
+            <Route
+              path="/conversations"
+              element={
+                <AuthenticatedRoute>
+                  <ConversationPage></ConversationPage>
+                </AuthenticatedRoute>
+              }
+            >
+              <Route path=":id" element={<ConversationChannelPage />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
-      <ToastContainer />
+        </Routes>
+        <ToastContainer />
+      </ChakraProvider>
     </AppWithProviders>
   )
 }

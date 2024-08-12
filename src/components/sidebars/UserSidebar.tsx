@@ -3,12 +3,15 @@ import DefaultProfile from '../../Assets/DefaultProfile.png'
 import { userSidebarItems } from '../../utils/constants'
 import { postLogoutUser } from '../../utils/api'
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../../utils/context/AuthContext'
 
 type Props = {
   handleProfileContainer: () => void
 }
 export const UserSidebar = ({ handleProfileContainer }: Props) => {
   const navigate = useNavigate()
+  const { user } = useContext(AuthContext)
   const getImage = (path: string) => {
     try {
       return require(`../../Assets${path}`)
@@ -29,13 +32,13 @@ export const UserSidebar = ({ handleProfileContainer }: Props) => {
   }
 
   return (
-    <div className="w-24 flex flex-col bg-backgroun_dark1  justify-between py-5">
+    <div className="w-24 flex flex-col bg-background_dark1  justify-between py-5">
       <div className="flex flex-col w-full">
         {/** Default Profile */}
         <div className="flex justify-center items-center">
           <img
-            src={DefaultProfile}
-            className="w-12 mb-8"
+            src={user?.profile?.image ? user.profile.image : DefaultProfile}
+            className="w-11 h-11 mb-8 rounded-full"
             onClick={() => handleProfileContainer()}
           />
         </div>

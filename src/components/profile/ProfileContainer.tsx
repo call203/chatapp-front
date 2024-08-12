@@ -111,7 +111,7 @@ export const ProfileContainer = ({ handleProfileContainer }: Props) => {
 
   /**** 프로필 저장하고 화면 리프레시 해야만 바뀐 &&& About me */
   return (
-    <div className="h-full absolute right-0 z-10 bg-backgroun_dark2 w-full md:w-6/12 lg:w-4/12 ">
+    <div className="h-full absolute right-0 z-10 bg-background_dark2 w-full md:w-6/12 lg:w-4/12 ">
       <div className="p-5 ">
         <div className="flex flex-row justify-between">
           <div className=" font-bold pb-8" style={{ fontSize: 20 }}>

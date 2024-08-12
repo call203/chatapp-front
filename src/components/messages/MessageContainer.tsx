@@ -5,6 +5,7 @@ import { AuthContext } from '../../utils/context/AuthContext'
 import { compareAsc, formatRelative } from 'date-fns'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
+import DefaultProfile from '../../Assets/DefaultProfile.png'
 
 type FormatteMessageProps = {
   user?: User
@@ -15,9 +16,13 @@ export const FormattedMessage: FC<FormatteMessageProps> = ({
   user,
   message,
 }) => {
+  console.log(user)
   return (
     <div className="flex flex-center flex-row pt-5">
-      <div className="h-11 w-11 bg-red-400 rounded-full" />
+      <img
+        src={user?.profile?.image ? user.profile.image : DefaultProfile}
+        className="w-11 h-11  rounded-full"
+      />
 
       <div className="ml-4">
         <div className="flex flex-col">

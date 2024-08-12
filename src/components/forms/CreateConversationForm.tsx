@@ -8,10 +8,9 @@ import { useNavigate } from 'react-router-dom'
 import { createConversationThunk } from '../../store/conversationSlice'
 
 type Props = {
-  setShowmodal: Dispatch<React.SetStateAction<boolean>>
+  onClose: () => void
 }
-
-export const CreateConversationForm: FC<Props> = ({ setShowmodal }) => {
+export const CreateConversationForm: FC<Props> = ({ onClose }) => {
   const {
     register,
     handleSubmit,
@@ -24,7 +23,7 @@ export const CreateConversationForm: FC<Props> = ({ setShowmodal }) => {
     dispatch(createConversationThunk(data))
       .unwrap()
       .then(({ data }) => {
-        setShowmodal(false)
+        onClose()
         navigate(`/conversations/${data.id}`)
       })
       .catch((err) => console.log(err))
@@ -34,9 +33,9 @@ export const CreateConversationForm: FC<Props> = ({ setShowmodal }) => {
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
       <section>
         <div className="bg-b_131313 rounded-md py-4 px-5 mb-2">
-          <div className="text-sm mb-1 text-gray-200">Email</div>
+          <div className="text-xsm mb-1 text-gray-200">Email</div>
           <input
-            className="bg-inherit text-white text-bas w-full"
+            className="bg-inherit text-white text-sm w-full"
             style={{ border: 'none', outline: 'none' }}
             {...register('email', { required: 'Email is required' })}
           />
@@ -44,11 +43,10 @@ export const CreateConversationForm: FC<Props> = ({ setShowmodal }) => {
       </section>
       <section>
         <div className="bg-b_131313 rounded-md w-full py-4 px-5 mb-2">
-          <div className="text-sm mb-1 text-gray-200">Mesage (optional)</div>
+          <div className="text-xsm mb-1 text-gray-200">Mesage (optional)</div>
           <input
             className="bg-inherit text-white w-full text-base"
             style={{ border: 'none', outline: 'none' }}
-            {...register('message', { required: 'Message is required' })}
           />
         </div>
       </section>

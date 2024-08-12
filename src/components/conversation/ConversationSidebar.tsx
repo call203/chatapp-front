@@ -7,6 +7,7 @@ import { Loading } from '../loading'
 import { MainButton } from '../MainButton'
 import defaultImg from '../../Assets/DefaultProfile.png'
 import searchImg from '../../Assets/Search.png'
+import { useDisclosure } from '@chakra-ui/react'
 
 type Props = {
   conversations: ConversationType[]
@@ -15,17 +16,18 @@ type Props = {
 export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
-  const [showModal, setShowModal] = useState(false)
+  // const [showModal, setShowModal] = useState(false)
   const getDisplayUser = (conversation: ConversationType) => {
     return conversation.creator.id === user?.id
       ? conversation.recipient
       : conversation.creator
   }
 
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      {showModal && <CreateConversationModal setShowModal={setShowModal} />}
-      <div className="w-80 flex flex-col bg-backgroun_dark2 py-10 px-5">
+      <CreateConversationModal isOpen={isOpen} onClose={onClose} />
+      <div className="w-80 flex flex-col bg-background_dark2 py-10 px-5">
         <div className="flex flex-col">
           {/** Conversation Search Input */}
           <div className="flex flex-row justify-center items-center bg-black">
@@ -39,7 +41,7 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
             </div>
           </div>
           {/** Create Conversation Button */}
-          <div className="py-6">
+          <div className="py-6" onClick={onOpen}>
             <MainButton>Start new Chat</MainButton>
           </div>
         </div>
@@ -56,7 +58,14 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
                   onClick={() => navigate(`/conversations/${conversation.id}`)}
                 >
                   <div className="flex align-middle">
-                    <img src={defaultImg} className="w-10 h-10" />
+                    <img
+                      src={
+                        getDisplayUser(conversation)?.profile
+                          ? getDisplayUser(conversation).profile.image
+                          : defaultImg
+                      }
+                      className="w-10 h-10"
+                    />
                     <div className="ml-5">
                       <div className="text-sm font-semibold">
                         {`${getDisplayUser(conversation).firstName}`}
