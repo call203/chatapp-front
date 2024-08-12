@@ -15,6 +15,13 @@ export type User = {
   email: string
   firstName: string
   lastName: string
+  profile: Profile
+}
+
+export type Profile = {
+  id: number
+  about: string
+  image: string
 }
 
 export type ConversationType = {

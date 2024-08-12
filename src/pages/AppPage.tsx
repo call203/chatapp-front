@@ -10,7 +10,7 @@ export const AppPage = () => {
   }
   return (
     <div className="flex flex-col h-screen bg-background">
-      <div className="flex flex-1 overflow-y-auto ">
+      <div className="flex flex-1 overflow-y-auto">
         <UserSidebar handleProfileContainer={handleProfileContainer} />
         <div className="flex-1">
           {profile && (

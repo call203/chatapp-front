@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-
+import 'react-toastify/dist/ReactToastify.css'
 import { RegisterPage } from './pages/RegisterPage'
 import { LoginPage } from './pages/LoginPage'
 import { ConversationPage } from './pages/ConversationsPage'
@@ -13,6 +13,7 @@ import { Socket } from 'socket.io-client'
 import { Provider as ReduxProvider } from 'react-redux'
 import { store } from './store'
 import { AppPage } from './pages/AppPage'
+import { ToastContainer } from 'react-toastify'
 
 type Props = {
   user?: User
@@ -55,6 +56,7 @@ function App() {
           </Route>
         </Route>
       </Routes>
+      <ToastContainer />
     </AppWithProviders>
   )
 }

@@ -32,3 +32,14 @@ export const postNewMessage = (data: MessageCreateParams) =>
 
 export const postNewConversation = (data: CreateConversationParams) =>
   axios.post(`${REACT_APP_API_URL}/conversations`, data, config)
+
+export const patchUpdateProfile = (data: FormData) => {
+  const customConfig: AxiosRequestConfig = {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      // Additional headers here
+    },
+    withCredentials: true,
+  }
+  return axios.patch(`${REACT_APP_API_URL}/users/profiles`, data, customConfig)
+}
