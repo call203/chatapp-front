@@ -5,12 +5,12 @@ import { postLogoutUser } from '../../utils/api'
 import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../../utils/context/AuthContext'
+import { setProfileInfo, toggleProfile } from '../../store/profileSlice'
+import { useDispatch } from 'react-redux'
 
-type Props = {
-  handleProfileContainer: () => void
-}
-export const UserSidebar = ({ handleProfileContainer }: Props) => {
+export const UserSidebar = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const { user } = useContext(AuthContext)
   const getImage = (path: string) => {
     try {
@@ -31,6 +31,13 @@ export const UserSidebar = ({ handleProfileContainer }: Props) => {
     })
   }
 
+  const handleProfile = () => {
+    if (user) {
+      dispatch(setProfileInfo(user))
+      dispatch(toggleProfile())
+    }
+  }
+
   return (
     <div className="w-24 flex flex-col bg-background_dark1  justify-between py-5">
       <div className="flex flex-col w-full">
@@ -39,7 +46,7 @@ export const UserSidebar = ({ handleProfileContainer }: Props) => {
           <img
             src={user?.profile?.image ? user.profile.image : DefaultProfile}
             className="w-11 h-11 mb-8 rounded-full"
-            onClick={() => handleProfileContainer()}
+            onClick={handleProfile}
           />
         </div>
         {/** Menu */}

@@ -15,11 +15,12 @@ import { useToast } from '../../utils/hooks/useToast'
 import { MainButton } from '../MainButton'
 import { patchUpdateProfile } from '../../utils/api'
 import { User } from '../../utils/types'
+import { useDispatch } from 'react-redux'
+import { toggleProfile } from '../../store/profileSlice'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
-type Props = {
-  handleProfileContainer: () => void
-}
-export const ProfileContainer = ({ handleProfileContainer }: Props) => {
+export const ProfileContainer = () => {
   const { user, updateAuthUser } = useContext(AuthContext)
   const [active, setActive] = useState<Boolean>(true)
   const [image, setImage] = useState<string>(defaultImg)
@@ -28,11 +29,13 @@ export const ProfileContainer = ({ handleProfileContainer }: Props) => {
   const [change, setChange] = useState(false)
   const imageRef = useRef<HTMLInputElement | null>(null)
   const [changedFile, setChangedFile] = useState<File | null>(null)
+  const dispatch = useDispatch()
+  const profile = useSelector((state: RootState) => state.profile)
 
   useEffect(() => {
-    if (user?.profile) {
-      setImage(user.profile.image)
-      setAbout(user.profile.about)
+    if (profile.info?.profile) {
+      setImage(profile.info?.profile.image)
+      setAbout(profile.info?.profile.about)
     }
 
     const handleFocus = () => {
@@ -120,13 +123,16 @@ export const ProfileContainer = ({ handleProfileContainer }: Props) => {
           <img
             src={closeImg}
             className="w-7 h-7"
-            onClick={handleProfileContainer}
+            onClick={() => dispatch(toggleProfile())}
           />
         </div>
 
         <div className="flex justify-center pb-8">
           <div className="relative">
-            <img src={image} className="w-56 h-56 rounded-full" />
+            <img
+              src={image ? image : defaultImg}
+              className="w-56 h-56 rounded-full"
+            />
             <div className="absolute right-5 bottom-1 right-8bg-my_blue p-2 rounded-full bg-my_blue">
               <img
                 src={editImg}
@@ -165,14 +171,13 @@ export const ProfileContainer = ({ handleProfileContainer }: Props) => {
               <div className="text-6xl font-bold mr-5 mb-2">About me</div>
               <img src={editImg} className="w-5 h-5" />
             </div>
-            {/* <p>{user?.profile?.about}</p> */}
             <input
               className="bg-inherit text-white w-full text-base"
               style={{ border: 'none', outline: 'none' }}
-              defaultValue={user?.profile?.about}
+              defaultValue={profile.info?.profile.about}
               onChange={(e) => {
                 setAbout(e.target.value)
-                if (e.target.value !== user?.profile?.about) {
+                if (e.target.value !== profile.info?.profile.about) {
                   setChange(true)
                 } else setChange(false)
               }}

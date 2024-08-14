@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react'
+import { FC, useContext } from 'react'
 import { ConversationType } from '../../utils/types'
 import { useNavigate } from 'react-router-dom'
 import { CreateConversationModal } from '../Modal/CreateConversationModal'
@@ -16,7 +16,6 @@ type Props = {
 export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
   const navigate = useNavigate()
   const { user } = useContext(AuthContext)
-  // const [showModal, setShowModal] = useState(false)
   const getDisplayUser = (conversation: ConversationType) => {
     return conversation.creator.id === user?.id
       ? conversation.recipient
@@ -57,10 +56,10 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
                   key={conversation.id}
                   onClick={() => navigate(`/conversations/${conversation.id}`)}
                 >
-                  <div className="flex align-middle">
+                  <div className="flex align-middle items-center">
                     <img
                       src={
-                        getDisplayUser(conversation)?.profile
+                        getDisplayUser(conversation)?.profile.image
                           ? getDisplayUser(conversation).profile.image
                           : defaultImg
                       }

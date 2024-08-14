@@ -16,11 +16,14 @@ export const FormattedMessage: FC<FormatteMessageProps> = ({
   user,
   message,
 }) => {
-  console.log(user)
   return (
     <div className="flex flex-center flex-row pt-5">
       <img
-        src={user?.profile?.image ? user.profile.image : DefaultProfile}
+        src={
+          message.author?.profile?.image
+            ? message.author?.profile.image
+            : DefaultProfile
+        }
         className="w-11 h-11  rounded-full"
       />
 

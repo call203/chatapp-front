@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../store'
 import { fetchMessagesThunk } from '../store/messageSlice'
 import { addConversation } from '../store/conversationSlice'
+import { ProfileContainer } from '../components/profile/ProfileContainer'
 
 export const ConversationChannelPage = () => {
   const { id } = useParams()
@@ -34,5 +35,15 @@ export const ConversationChannelPage = () => {
     }
   }, [id])
 
-  return <MesasgePanel></MesasgePanel>
+  const [profile, setProfile] = useState(false)
+  const handleProfileContainer = () => {
+    setProfile(!profile)
+  }
+
+  return (
+    <>
+      {profile && <ProfileContainer />}
+      <MesasgePanel />
+    </>
+  )
 }

@@ -8,6 +8,7 @@ import {
 import styles from './index.module.scss'
 import { CreateUserParams } from '../../utils/types'
 import { postRegisterUser } from '../../utils/api'
+import { useNavigate } from 'react-router-dom'
 export const RegisterForm = () => {
   const {
     register,
@@ -15,10 +16,13 @@ export const RegisterForm = () => {
     formState: { errors },
   } = useForm<CreateUserParams>()
 
+  const navigate = useNavigate()
+
   const onSubmit = async (data: CreateUserParams) => {
     console.log(data)
     try {
       await postRegisterUser(data)
+      navigate('/login')
     } catch (err) {
       console.log(err)
     }
