@@ -2,12 +2,12 @@ import { Route, Routes } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 import { RegisterPage } from './pages/RegisterPage'
 import { LoginPage } from './pages/LoginPage'
-import { ConversationPage } from './pages/ConversationsPage'
+import { ConversationPage } from './pages/conversations/ConversationsPage'
 import { AuthenticatedRoute } from './components/AuthenticatedRoute'
 import { AuthContext } from './utils/context/AuthContext'
 import { User } from './utils/types'
 import React, { PropsWithChildren, useState } from 'react'
-import { ConversationChannelPage } from './pages/ConversationChannelPage'
+import { ConversationChannelPage } from './pages/conversations/ConversationChannelPage'
 import { SocketContext, socket } from './utils/context/SocketContext'
 import { Socket } from 'socket.io-client'
 import { Provider as ReduxProvider } from 'react-redux'
@@ -15,6 +15,8 @@ import { store } from './store'
 import { AppPage } from './pages/AppPage'
 import { ToastContainer } from 'react-toastify'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { FriendsPage } from './pages/friends/FriendsPage'
+import { FriendsLayoutPage } from './pages/friends/FriendsLayoutPage'
 
 const theme = extendTheme({
   styles: {
@@ -67,6 +69,7 @@ function App() {
             >
               <Route path=":id" element={<ConversationChannelPage />} />
             </Route>
+            <Route path="/friends" element={<FriendsLayoutPage />} />
           </Route>
         </Routes>
         <ToastContainer />

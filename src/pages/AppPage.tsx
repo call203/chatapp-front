@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { UserSidebar } from '../components/sidebars/UserSidebar'
+import { UserSidebar } from '../components/Bar/UserSidebar'
 import { ProfileContainer } from '../components/profile/ProfileContainer'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'

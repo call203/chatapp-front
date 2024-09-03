@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
-import { MesasgePanel } from '../components/messages/MessagePanel'
+import { MesasgePanel } from '../../components/messages/MessagePanel'
 import {
   ConversationType,
   MessageEventPayload,
   MessageType,
-} from '../utils/types'
-import { getConversationMessages } from '../utils/api'
+} from '../../utils/types'
+import { getConversationMessages } from '../../utils/api'
 import { useParams } from 'react-router-dom'
-import { socket } from '../utils/context/SocketContext'
+import { socket } from '../../utils/context/SocketContext'
 import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../store'
-import { fetchMessagesThunk } from '../store/messageSlice'
-import { addConversation } from '../store/conversationSlice'
-import { ProfileContainer } from '../components/profile/ProfileContainer'
+import { AppDispatch } from '../../store'
+import { fetchMessagesThunk } from '../../store/messageSlice'
+import { addConversation } from '../../store/conversationSlice'
+import { ProfileContainer } from '../../components/profile/ProfileContainer'
 
 export const ConversationChannelPage = () => {
   const { id } = useParams()

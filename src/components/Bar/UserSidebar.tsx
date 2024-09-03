@@ -56,6 +56,7 @@ export const UserSidebar = () => {
               <div
                 key={item.id}
                 className={`flex justify-center items-center py-5`}
+                onClick={() => navigate(item.path)}
               >
                 <img
                   className="w-9"

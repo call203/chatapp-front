@@ -23,6 +23,9 @@ module.exports = {
         background_dark1: '#111111',
         background_dark2: '#151515',
       },
+      boxShadow: {
+        light_gray: '0px 1px 0px rgba(243, 245, 246, 0.5)',
+      },
     },
   },
   plugins: [],

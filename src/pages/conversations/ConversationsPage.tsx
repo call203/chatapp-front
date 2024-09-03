@@ -1,17 +1,17 @@
 import { Outlet, useParams } from 'react-router-dom'
-import { ConversationSideBar } from '../components/conversation/ConversationSidebar'
+import { ConversationSideBar } from '../../components/conversation/ConversationSidebar'
 import { useEffect } from 'react'
-import { ConversationPanel } from '../components/conversation/ConversationPanel'
+import { ConversationPanel } from '../../components/conversation/ConversationPanel'
 import { useDispatch } from 'react-redux'
-import { AppDispatch, RootState } from '../store'
+import { AppDispatch, RootState } from '../../store'
 import {
   addConversation,
   fetchConversationThunk,
-} from '../store/conversationSlice'
+} from '../../store/conversationSlice'
 import { useSelector } from 'react-redux'
-import { addMessage, fetchMessagesThunk } from '../store/messageSlice'
-import { socket } from '../utils/context/SocketContext'
-import { ConversationType, MessageEventPayload } from '../utils/types'
+import { addMessage, fetchMessagesThunk } from '../../store/messageSlice'
+import { socket } from '../../utils/context/SocketContext'
+import { ConversationType, MessageEventPayload } from '../../utils/types'
 
 export const ConversationPage = () => {
   const { id } = useParams()
