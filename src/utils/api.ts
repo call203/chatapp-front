@@ -43,3 +43,6 @@ export const patchUpdateProfile = (data: FormData) => {
   }
   return axios.patch(`${REACT_APP_API_URL}/users/profiles`, data, customConfig)
 }
+
+export const getFriends = () =>
+  axios.get(`${REACT_APP_API_URL}/friends`, config)

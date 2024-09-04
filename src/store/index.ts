@@ -2,9 +2,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import conversation from './conversationSlice'
 import message from './messageSlice'
 import profile from './profileSlice'
+import friend from './friendSlice'
 import logger from 'redux-logger'
 export const store = configureStore({
-  reducer: { conversation, message, profile },
+  reducer: { conversation, message, profile, friend },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(logger),
   devTools: true,

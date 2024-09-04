@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux'
 export const UserSidebar = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const { user } = useContext(AuthContext)
   const getImage = (path: string) => {
     try {
@@ -39,27 +40,25 @@ export const UserSidebar = () => {
   }
 
   return (
-    <div className="w-24 flex flex-col bg-background_dark1  justify-between py-5">
-      <div className="flex flex-col w-full">
-        {/** Default Profile */}
+    <div className="md:w-16 w-full flex flex-row md:flex-col bg-background_dark1 justify-between md:h-full absolute bottom-0 md:static md:bottom-auto md:py-5">
+      <div className="flex w-full flex-row md:flex-col justify-evenly ">
         <div className="flex justify-center items-center">
           <img
             src={user?.profile?.image ? user.profile.image : DefaultProfile}
-            className="w-11 h-11 mb-8 rounded-full"
+            className="w-11 h-11 md:mb-5 rounded-full"
             onClick={handleProfile}
           />
         </div>
-        {/** Menu */}
-        <div>
+        <div className="flex flex-row md:flex-col">
           {userSidebarItems.map((item) => {
             return (
               <div
                 key={item.id}
-                className={`flex justify-center items-center py-5`}
+                className={`flex justify-center items-center py-5 px-5`}
                 onClick={() => navigate(item.path)}
               >
                 <img
-                  className="w-9"
+                  className="w-7"
                   src={getImage(item.pathname)}
                   alt={item.id}
                 />
@@ -68,12 +67,11 @@ export const UserSidebar = () => {
           })}
         </div>
       </div>
-      {/** Logout */}
-      <div className={'flex justify-center items-center'}>
+      <div className={'md:flex justify-center items-center hidden'}>
         <img
           onClick={() => logoutUser()}
           src={LogoutImg}
-          className="w-8 rotate-180"
+          className="w-7 rotate-180"
         />
       </div>
     </div>

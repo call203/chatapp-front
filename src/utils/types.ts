@@ -24,6 +24,13 @@ export type Profile = {
   image: string
 }
 
+export type Friend = {
+  id: number
+  createAt: string
+  sender: User
+  receiver: User
+}
+
 export type ConversationType = {
   id: number
   creator: User
