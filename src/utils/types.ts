@@ -80,3 +80,7 @@ export type ConversationMessagesType = {
   conversationId: number
   messages: MessageType[]
 }
+
+export type RequestFriendParams = {
+  email: string
+}

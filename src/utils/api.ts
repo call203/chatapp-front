@@ -4,6 +4,7 @@ import {
   CreateUserParams,
   LoginParams,
   MessageCreateParams,
+  RequestFriendParams,
 } from './types'
 const { REACT_APP_API_URL } = process.env
 
@@ -37,7 +38,6 @@ export const patchUpdateProfile = (data: FormData) => {
   const customConfig: AxiosRequestConfig = {
     headers: {
       'Content-Type': 'multipart/form-data',
-      // Additional headers here
     },
     withCredentials: true,
   }
@@ -46,3 +46,6 @@ export const patchUpdateProfile = (data: FormData) => {
 
 export const getFriends = () =>
   axios.get(`${REACT_APP_API_URL}/friends`, config)
+
+export const postRequestFriend = (data: RequestFriendParams) =>
+  axios.post(`${REACT_APP_API_URL}/friends/requests`, data, config)
