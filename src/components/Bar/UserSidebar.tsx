@@ -40,7 +40,7 @@ export const UserSidebar = () => {
   }
 
   return (
-    <div className="md:w-16 w-full flex flex-row md:flex-col bg-background_dark1 justify-between md:h-full absolute bottom-0 md:static md:bottom-auto md:py-5">
+    <div className="md:w-20  w-full flex flex-row md:flex-col bg-background_dark1 justify-between md:h-full absolute bottom-0 md:static md:bottom-auto md:py-5">
       <div className="flex w-full flex-row md:flex-col justify-evenly ">
         <div className="flex justify-center items-center">
           <img
@@ -58,7 +58,7 @@ export const UserSidebar = () => {
                 onClick={() => navigate(item.path)}
               >
                 <img
-                  className="w-7"
+                  className="w-8"
                   src={getImage(item.pathname)}
                   alt={item.id}
                 />

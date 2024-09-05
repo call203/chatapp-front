@@ -39,7 +39,7 @@ export type ConversationType = {
 }
 
 export type CreateConversationParams = {
-  email: number
+  email: string
   message?: string
 }
 

@@ -31,25 +31,31 @@ export const FriendsPageNavBar: React.FC<FriendsPageNavBarProps> = ({
     const ref = useRef<HTMLLIElement | null>(null)
 
     return (
-      <li
-        ref={ref}
-        onClick={() => {
-          {
-            if (!ref?.current) return
-            setNavId(index)
-            const { width } = ref.current.getBoundingClientRect()
-            setPosition({
-              left: ref.current.offsetLeft,
-              width,
-              opacity: 1,
-            })
-          }
-        }}
-        className={`flex-1 md:px-10 py-3 h-14 md:flex-none text-center`}
-        style={{ fontSize: 15 }}
-      >
-        {name}
-      </li>
+      <>
+        <li
+          ref={ref}
+          onClick={() => {
+            {
+              if (!ref?.current) return
+              setNavId(index)
+              const { width } = ref.current.getBoundingClientRect()
+              setPosition({
+                left: ref.current.offsetLeft,
+                width,
+                opacity: 1,
+              })
+            }
+          }}
+          className={`flex-1 md:px-10 py-4 h-14 md:flex-none text-center ${
+            index === 0 && position.opacity === 0
+              ? 'border-my_blue border-b-4'
+              : 'border-none border-transparent'
+          }`}
+          style={{ fontSize: 15 }}
+        >
+          {name}
+        </li>
+      </>
     )
   }
 
@@ -57,7 +63,7 @@ export const FriendsPageNavBar: React.FC<FriendsPageNavBarProps> = ({
     return (
       <motion.li
         animate={{ ...position }}
-        className="h-12 absolute border-b-4 border-my_blue"
+        className="h-14 absolute border-b-4 border-my_blue"
       />
     )
   }
