@@ -36,41 +36,41 @@ export const FriendList = () => {
   }
 
   return (
-    <div className="overflow-y-auto flex-1 no-scrollbar">
-      <div>
-        <div className="list-none p-0 m-0">
-          {friends.map((i, idx) => {
-            return (
-              <>
-                <li
-                  className={`flex flex-row py-4  items-center ${
-                    overIdx === idx ? 'bg-slate-900' : 'bg-transparent'
-                  }`}
-                  onMouseDown={() => setOverIdx(idx)}
-                  onMouseUp={() => setOverIdx(null)}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => createConversation(filterFriend(i).email)}
-                >
-                  <img
-                    className="w-10 mr-8"
-                    src={
-                      filterFriend(i).profile.image
-                        ? filterFriend(i).profile.image
-                        : DefaultProfile
-                    }
-                  />
-                  <div className="flex flex-col">
-                    <div>{filterFriend(i).email}</div>
-                    <div className="text-gray-400 text-sm mt-1">
-                      {filterFriend(i).profile.about}
-                    </div>
+    <>
+      {friends.length === 0 ? (
+        <div className="p-5">Add your friends!</div>
+      ) : (
+        friends.map((i, idx) => {
+          return (
+            <>
+              <li
+                className={`flex flex-row py-4  items-center ${
+                  overIdx === idx ? 'bg-slate-900' : 'bg-transparent'
+                }`}
+                onMouseDown={() => setOverIdx(idx)}
+                onMouseUp={() => setOverIdx(null)}
+                style={{ cursor: 'pointer' }}
+                onClick={() => createConversation(filterFriend(i).email)}
+              >
+                <img
+                  className="w-11 h-11 mr-8 rounded-full"
+                  src={
+                    filterFriend(i).profile.image
+                      ? filterFriend(i).profile.image
+                      : DefaultProfile
+                  }
+                />
+                <div className="flex flex-col">
+                  <div>{filterFriend(i).email}</div>
+                  <div className="text-gray-400 text-sm mt-1">
+                    {filterFriend(i).profile.about}
                   </div>
-                </li>
-              </>
-            )
-          })}
-        </div>
-      </div>
-    </div>
+                </div>
+              </li>
+            </>
+          )
+        })
+      )}
+    </>
   )
 }

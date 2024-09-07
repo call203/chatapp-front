@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 
 export const ProfileContainer = () => {
-  const { user, updateAuthUser } = useContext(AuthContext)
+  const {updateAuthUser } = useContext(AuthContext)
   const [active, setActive] = useState<Boolean>(true)
   const [image, setImage] = useState<string>(defaultImg)
   const [about, setAbout] = useState<string>('')

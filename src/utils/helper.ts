@@ -1,4 +1,9 @@
-import { ConversationType, User } from './types'
+import {
+  ConversationType,
+  User,
+  FriendRequest,
+  FriendRequestDetailsType,
+} from './types'
 
 export const getRecipientFromConversation = (
   conversation?: ConversationType,
@@ -8,3 +13,19 @@ export const getRecipientFromConversation = (
     ? conversation?.recipient
     : conversation?.creator
 }
+
+export const getFriendRequestDetails = (
+  { receiver, sender }: FriendRequest,
+  user?: User,
+): FriendRequestDetailsType =>
+  user?.id === receiver?.id
+    ? {
+        status: 'Incoming Friend Request',
+        user: sender,
+        incoming: true,
+      }
+    : {
+        status: 'Outgoing Friend Request',
+        user: receiver,
+        incoming: false,
+      }

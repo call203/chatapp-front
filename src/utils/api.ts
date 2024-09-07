@@ -49,3 +49,15 @@ export const getFriends = () =>
 
 export const postRequestFriend = (data: RequestFriendParams) =>
   axios.post(`${REACT_APP_API_URL}/friends/requests`, data, config)
+
+export const getRequestFriend = () =>
+  axios.get(`${REACT_APP_API_URL}/friends/requests`, config)
+
+export const patchAcceptRequestFriend = (id: number) =>
+  axios.patch(`${REACT_APP_API_URL}/friends/requests/${id}/accept`, {}, config)
+
+export const deletecancelRequestFriend = (id: number) =>
+  axios.delete(`${REACT_APP_API_URL}/friends/requests/${id}/cancel`, config)
+
+export const patchRejectRequestFriend = (id: number) =>
+  axios.patch(`${REACT_APP_API_URL}/friends/requests/${id}/reject`, {}, config)

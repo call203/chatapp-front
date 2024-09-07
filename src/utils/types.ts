@@ -30,6 +30,19 @@ export type Friend = {
   sender: User
   receiver: User
 }
+export type FriendRequest = {
+  id: number
+  createAt: string
+  stateus: string
+  sender: User
+  receiver: User
+}
+
+export type FriendRequestDetailsType = {
+  status: string
+  user: User
+  incoming: boolean
+}
 
 export type ConversationType = {
   id: number

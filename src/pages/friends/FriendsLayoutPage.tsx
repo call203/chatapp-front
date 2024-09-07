@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { MainButton } from '../../components/MainButton'
 import { RequestFriendModal } from '../../components/Modal/RequestFriendModal'
 import { useDisclosure } from '@chakra-ui/react'
+import { FriendRequestList } from '../../components/friends/FriendRequestList'
 
 export const FriendsLayoutPage = () => {
   const friends = useSelector((state: RootState) => state.friend).friends
@@ -13,7 +14,7 @@ export const FriendsLayoutPage = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
 
   return (
-    <div className="flex flex-col px-5 pt-10 h-full">
+    <div className="flex flex-col px-5 pt-10 h-full ">
       <RequestFriendModal isOpen={isOpen} onClose={onClose} />
       <div className="pb-10 flex flex-row justify-between">
         <div>
@@ -29,7 +30,14 @@ export const FriendsLayoutPage = () => {
       </div>
 
       <FriendsPageNavBar setNavId={setNavId} />
-      {navId === 0 && <FriendsPage />}
+      <div className="overflow-y-auto flex-1 no-scrollbar">
+        <div>
+          <div className="list-none p-0 m-0">
+            {navId === 0 && <FriendsPage />}
+            {navId === 1 && <FriendRequestList />}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
