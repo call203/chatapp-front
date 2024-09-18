@@ -79,6 +79,11 @@ export type ConversationLastMessageUpdate = {
   content: string
 }
 
+export type AcceptFriendRequestResponse = {
+  friend: Friend
+  friendRequest: FriendRequest
+}
+
 export type MessageCreateParams = {
   conversationId: number
   content: string

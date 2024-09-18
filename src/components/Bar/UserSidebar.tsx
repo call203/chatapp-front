@@ -7,6 +7,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../../utils/context/AuthContext'
 import { setProfileInfo, toggleProfile } from '../../store/profileSlice'
 import { useDispatch } from 'react-redux'
+import { RequestNumber } from './RequestNumber'
 
 export const UserSidebar = () => {
   const navigate = useNavigate()
@@ -53,15 +54,20 @@ export const UserSidebar = () => {
           {userSidebarItems.map((item) => {
             return (
               <div
-                key={item.id}
-                className={`flex justify-center items-center py-5 px-5`}
-                onClick={() => navigate(item.path)}
+                className={`relative ${item.id === 'friend' && 'bg-blue-100'}`}
               >
-                <img
-                  className="w-8"
-                  src={getImage(item.pathname)}
-                  alt={item.id}
-                />
+                {item.id === 'friends' && <RequestNumber />}
+                <div
+                  key={item.id}
+                  className={`flex justify-center items-center py-5 px-5`}
+                  onClick={() => navigate(item.path)}
+                >
+                  <img
+                    className="w-8"
+                    src={getImage(item.pathname)}
+                    alt={item.id}
+                  />
+                </div>
               </div>
             )
           })}

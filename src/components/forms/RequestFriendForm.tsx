@@ -8,6 +8,9 @@ import {
 import { ErrorMessage } from '@hookform/error-message'
 import { postRequestFriend } from '../../utils/api'
 import { useToast } from '../../utils/hooks/useToast'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../store'
+import { createFriendRequestThunk } from '../../store/friendSlice'
 type Props = {
   onClose: () => void
 }
@@ -19,8 +22,10 @@ export const RequestFriendForm: FC<Props> = ({ onClose }) => {
   } = useForm<CreateConversationParams>({})
   const { success, error } = useToast()
 
+  const dispatch = useDispatch<AppDispatch>()
+
   const onSubmit = (data: RequestFriendParams) => {
-    postRequestFriend(data)
+    dispatch(createFriendRequestThunk(data))
       .then(() => {
         success('send!')
         onClose()

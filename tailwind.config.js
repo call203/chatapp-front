@@ -19,6 +19,7 @@ module.exports = {
         my_gray: '#989898',
         my_orange: '#FF9900',
         my_blue: '#3a4dcd',
+        my_red: '#ff4040',
         background: '#0b0b0b',
         background_dark1: '#111111',
         background_dark2: '#151515',
