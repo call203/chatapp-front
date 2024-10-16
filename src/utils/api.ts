@@ -6,6 +6,7 @@ import {
   MessageCreateParams,
   RequestFriendParams,
 } from './types'
+import { apiRequest } from './apihelper'
 const { REACT_APP_API_URL } = process.env
 
 const config: AxiosRequestConfig = { withCredentials: true }
@@ -47,8 +48,10 @@ export const patchUpdateProfile = (data: FormData) => {
 export const getFriends = () =>
   axios.get(`${REACT_APP_API_URL}/friends`, config)
 
-export const postRequestFriend = (data: RequestFriendParams) =>
-  axios.post(`${REACT_APP_API_URL}/friends/requests`, data, config)
+export const postRequestFriend = (data: RequestFriendParams) =>{
+    return apiRequest('post',"/friends/requests",data,config)
+}
+
 
 export const getRequestFriend = () =>
   axios.get(`${REACT_APP_API_URL}/friends/requests`, config)

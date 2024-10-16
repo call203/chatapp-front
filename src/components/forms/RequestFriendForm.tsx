@@ -6,7 +6,6 @@ import {
   RequestFriendParams,
 } from '../../utils/types'
 import { ErrorMessage } from '@hookform/error-message'
-import { postRequestFriend } from '../../utils/api'
 import { useToast } from '../../utils/hooks/useToast'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store'
@@ -20,21 +19,20 @@ export const RequestFriendForm: FC<Props> = ({ onClose }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<CreateConversationParams>({})
-  const { success, error } = useToast()
+ const {success, showError} = useToast()
 
   const dispatch = useDispatch<AppDispatch>()
-
-  const onSubmit = (data: RequestFriendParams) => {
-    dispatch(createFriendRequestThunk(data))
-      .then(() => {
-        success('send!')
-        onClose()
-      })
-      .catch((err) => {
-        let { response } = err
-        error(response?.data?.message)
-      })
-  }
+  const onSubmit = async (data: RequestFriendParams) => {
+    try {
+      const res = await dispatch(createFriendRequestThunk(data)).unwrap();
+      console.log(res); 
+      success('send!');
+      onClose();
+    } catch (error:string|any) {
+      const errorMsg = error as string
+      showError(errorMsg); 
+    }
+  };
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>

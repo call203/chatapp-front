@@ -25,7 +25,7 @@ export const ProfileContainer = () => {
   const [active, setActive] = useState<Boolean>(true)
   const [image, setImage] = useState<string>(defaultImg)
   const [about, setAbout] = useState<string>('')
-  const { success, error } = useToast()
+  const { success, showError } = useToast()
   const [change, setChange] = useState(false)
   const imageRef = useRef<HTMLInputElement | null>(null)
   const [changedFile, setChangedFile] = useState<File | null>(null)
@@ -108,7 +108,7 @@ export const ProfileContainer = () => {
         }
       })
       .catch(() => {
-        error('Try agin :(')
+       showError('Try agin :(')
       })
   }
 

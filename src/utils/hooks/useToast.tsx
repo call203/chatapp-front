@@ -13,11 +13,11 @@ export function useToast(
   const success = (data: string) =>
     toast(data, { ...defaultOptions, type: 'success' })
 
-  const error = (data: string) =>
+  const showError = (data: string) =>
     toast(data, { ...defaultOptions, type: 'error' })
 
   const info = (data: string) =>
     toast(data, { ...defaultOptions, type: 'info' })
 
-  return { success, error, info }
+  return { success, showError, info }
 }

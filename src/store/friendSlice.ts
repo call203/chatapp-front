@@ -44,7 +44,13 @@ export const rejectFriendRequestThunk = createAsyncThunk(
 )
 export const createFriendRequestThunk = createAsyncThunk(
   'friends/request/create',
-  async (data: RequestFriendParams) => postRequestFriend(data),
+  async (data: RequestFriendParams,{rejectWithValue}) => {
+  try{
+    return await postRequestFriend(data)
+  }catch(error:any){
+    return  rejectWithValue(error.message)
+  }
+  }
 )
 
 export const friendSlice = createSlice({
@@ -75,8 +81,9 @@ export const friendSlice = createSlice({
       state.friendRequests = state.friendRequests.filter((i) => i.id != id)
       state.friends.push(action.payload.data.friend)
     })
+
     builder.addCase(createFriendRequestThunk.fulfilled, (state, action) => {
-      state.friendRequests.push(action.payload.data)
+      // state.friendRequests.push(action.payload.data)
     })
     builder.addCase(rejectFriendRequestThunk.fulfilled, (state, action) => {
       const { id } = action.payload.data
