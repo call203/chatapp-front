@@ -1,28 +1,28 @@
-import { FC, useContext } from 'react'
-import { ConversationType } from '../../utils/types'
-import { useNavigate } from 'react-router-dom'
-import { CreateConversationModal } from '../Modal/CreateConversationModal'
-import { AuthContext } from '../../utils/context/AuthContext'
-import { Loading } from '../loading'
-import { MainButton } from '../MainButton'
-import defaultImg from '../../Assets/DefaultProfile.png'
-import searchImg from '../../Assets/Search.png'
-import { useDisclosure } from '@chakra-ui/react'
+import { FC, useContext } from "react";
+import { ConversationType } from "../../utils/types";
+import { useNavigate } from "react-router-dom";
+import { CreateConversationModal } from "../Modal/CreateConversationModal";
+import { AuthContext } from "../../utils/context/AuthContext";
+import { Loading } from "../loading";
+import { MainButton } from "../MainButton";
+import defaultImg from "../../Assets/DefaultProfile.png";
+import searchImg from "../../Assets/Search.png";
+import { useDisclosure } from "@chakra-ui/react";
 
 type Props = {
-  conversations: ConversationType[]
-  loading: Boolean
-}
+  conversations: ConversationType[];
+  loading: Boolean;
+};
 export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
-  const navigate = useNavigate()
-  const { user } = useContext(AuthContext)
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const getDisplayUser = (conversation: ConversationType) => {
     return conversation.creator.id === user?.id
       ? conversation.recipient
-      : conversation.creator
-  }
+      : conversation.creator;
+  };
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
       <CreateConversationModal isOpen={isOpen} onClose={onClose} />
@@ -31,12 +31,12 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
           {/** Conversation Search Input */}
           <div className="flex flex-row justify-center items-center bg-black">
             <input
-              style={{ border: 'none', outline: 'none' }}
+              style={{ border: "none", outline: "none" }}
               placeholder="Search Chat"
               className="bg-black h-12 rounded-md py-4 pl-5 w-full"
             />
             <div className="px-4">
-              <img src={searchImg} className="w-6 h-5" />
+              <img src={searchImg} className="w-6 h-5" alt="search" />
             </div>
           </div>
           {/** Create Conversation Button */}
@@ -63,7 +63,8 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
                           ? getDisplayUser(conversation).profile.image
                           : defaultImg
                       }
-                      className="w-10 h-10"
+                      className="w-10 h-10 rounded-full"
+                      alt="conversation-profile"
                     />
                     <div className="ml-5">
                       <div className="text-sm font-semibold">
@@ -77,10 +78,10 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
                   </div>
                 </div>
               </>
-            )
+            );
           })}
         </div>
       </div>
     </>
-  )
-}
+  );
+};

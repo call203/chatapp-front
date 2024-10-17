@@ -1,104 +1,104 @@
 export type CreateUserParams = {
-  email: string
-  firstName: string
-  lastName: string
-  password: string
-}
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+};
 
 export type LoginParams = {
-  email: string
-  password: string
-}
+  email: string;
+  password: string;
+};
 
 export type User = {
-  id: number
-  email: string
-  firstName: string
-  lastName: string
-  profile: Profile
-}
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profile: Profile;
+};
 
 export type Profile = {
-  id: number
-  about: string
-  image: string
-}
+  id: number;
+  about: string;
+  image: string;
+};
 
 export type Friend = {
-  id: number
-  createAt: string
-  sender: User
-  receiver: User
-}
+  id: number;
+  createAt: string;
+  sender: User;
+  receiver: User;
+};
 export type FriendRequest = {
-  id: number
-  createAt: string
-  stateus: string
-  sender: User
-  receiver: User
-}
+  id: number;
+  createAt: string;
+  stateus: string;
+  sender: User;
+  receiver: User;
+};
 
 export type FriendRequestDetailsType = {
-  status: string
-  user: User
-  incoming: boolean
-}
+  status: string;
+  user: User;
+  incoming: boolean;
+};
 
 export type ConversationType = {
-  id: number
-  creator: User
-  recipient: User
-  lastMessageSent?: lastMessageType
-}
+  id: number;
+  creator: User;
+  recipient: User;
+  lastMessageSent?: lastMessageType;
+};
 
 export type CreateConversationParams = {
-  email: string
-  message?: string
-}
+  email: string;
+  message?: string;
+};
 
 export type MessageType = {
-  id: number
-  content: string
-  createdAt: string
-  author: User
-}
+  id: number;
+  content: string;
+  createdAt: string;
+  author: User;
+};
 
 export type lastMessageType = {
-  id: number
-  content: string
-  createdAt: string
-}
+  id: number;
+  content: string;
+  createdAt: string;
+};
 
 export type MessageEventPayload = {
-  message: MessageType
-  conversation: ConversationType
-}
+  message: MessageType;
+  conversation: ConversationType;
+};
 
 export type ConversationLastMessageUpdate = {
-  id: number
-  content: string
-}
+  id: number;
+  content: string;
+};
 
 export type AcceptFriendRequestResponse = {
-  friend: Friend
-  friendRequest: FriendRequest
-}
+  friend: Friend;
+  friendRequest: FriendRequest;
+};
 
 export type MessageCreateParams = {
-  conversationId: number
-  content: string
-}
+  conversationId: number;
+  content: string;
+};
 
 export type ConversationCreateParams = {
-  recipientId: number
-  content?: string
-}
+  recipientId: number;
+  content?: string;
+};
 
 export type ConversationMessagesType = {
-  conversationId: number
-  messages: MessageType[]
-}
+  conversationId: number;
+  messages: MessageType[];
+};
 
 export type RequestFriendParams = {
-  email: string
-}
+  email: string;
+};

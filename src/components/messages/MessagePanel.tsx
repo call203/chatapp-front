@@ -1,36 +1,36 @@
-import React, { FC, useEffect, useState } from 'react'
-import { MessageInputField } from './MessageInputField'
-import { MessagePanelHeader } from './MessagePanelHeader'
-import { useParams } from 'react-router-dom'
-import { MessageContainer } from './MessageContainer'
-import { postNewMessage } from '../../utils/api'
-import { setConversationLastMessage } from '../../store/conversationSlice'
-import { useDispatch } from 'react-redux'
+import React, { FC, useEffect, useState } from "react";
+import { MessageInputField } from "./MessageInputField";
+import { MessagePanelHeader } from "./MessagePanelHeader";
+import { useParams } from "react-router-dom";
+import { MessageContainer } from "./MessageContainer";
+import { postNewMessage } from "../../utils/api";
+import { setConversationLastMessage } from "../../store/conversationSlice";
+import { useDispatch } from "react-redux";
 
-type Props = {}
+type Props = {};
 
 export const MesasgePanel: FC<Props> = ({}) => {
-  const [content, setContent] = useState('')
-  const { id } = useParams()
-  const dispatch = useDispatch()
+  const [content, setContent] = useState("");
+  const { id } = useParams();
+  const dispatch = useDispatch();
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!id || !content) return
-    const conversationId = Number(id)
+    if (!id || !content) return;
+    const conversationId = Number(id);
     try {
-      await postNewMessage({ conversationId, content })
-      updateLastMessage()
-      setContent('')
+      await postNewMessage({ conversationId, content });
+      updateLastMessage();
+      setContent("");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   const updateLastMessage = () => {
-    dispatch(setConversationLastMessage({ id: Number(id), content }))
-  }
+    dispatch(setConversationLastMessage({ id: Number(id), content }));
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -38,7 +38,7 @@ export const MesasgePanel: FC<Props> = ({}) => {
 
       <div
         className="overflow-y-auto flex flex-col-reverse no-scrollbar flex-1 px-5 "
-        style={{ maxHeight: 'calc(100vh - 160px)' }}
+        style={{ maxHeight: "calc(100vh - 160px)" }}
       >
         <MessageContainer />
       </div>
@@ -50,5 +50,5 @@ export const MesasgePanel: FC<Props> = ({}) => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
