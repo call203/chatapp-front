@@ -49,6 +49,21 @@ export type ConversationType = {
   creator: User;
   recipient: User;
   lastMessageSent?: lastMessageType;
+  messageLastReads: MessageLastReads[];
+};
+
+export type UpdateMessageReadParams = {
+  userId: number;
+  conversationId: number;
+  messageId: number;
+  read: boolean;
+};
+
+export type MessageLastReads = {
+  id: number;
+  userId: number;
+  conversationId: number;
+  lastMessageId: number;
 };
 
 export type CreateConversationParams = {

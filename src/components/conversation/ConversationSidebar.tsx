@@ -1,5 +1,5 @@
 import { FC, useContext } from "react";
-import { ConversationType } from "../../utils/types";
+import { ConversationType, User } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
 import { CreateConversationModal } from "../Modal/CreateConversationModal";
 import { AuthContext } from "../../utils/context/AuthContext";
@@ -8,6 +8,7 @@ import { MainButton } from "../MainButton";
 import defaultImg from "../../Assets/DefaultProfile.png";
 import searchImg from "../../Assets/Search.png";
 import { useDisclosure } from "@chakra-ui/react";
+import { UnreadCountBox } from "./UnreadCountBox";
 
 type Props = {
   conversations: ConversationType[];
@@ -48,36 +49,42 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
         <div className="overflow-y-auto flex-grow">
           {loading && <Loading />}
           {/** Conversations */}
-          {conversations.map((conversation) => {
+          {conversations.map((conversation, index) => {
             return (
-              <>
-                <div
-                  className="overflow-y-auto py-4"
-                  key={conversation.id}
-                  onClick={() => navigate(`/conversations/${conversation.id}`)}
-                >
-                  <div className="flex align-middle items-center">
-                    <img
-                      src={
-                        getDisplayUser(conversation)?.profile.image
-                          ? getDisplayUser(conversation).profile.image
-                          : defaultImg
-                      }
-                      className="w-10 h-10 rounded-full"
-                      alt="conversation-profile"
-                    />
-                    <div className="ml-5">
-                      <div className="text-sm font-semibold">
-                        {`${getDisplayUser(conversation).firstName}`}
-                        {`  ${getDisplayUser(conversation).lastName}`}
-                      </div>
-                      <div className="text-sm text-gray-300 ">
-                        {conversation.lastMessageSent?.content}
-                      </div>
+              <div
+                className="overflow-y-auto py-4"
+                key={index}
+                onClick={() => navigate(`/conversations/${conversation.id}`)}
+              >
+                <div className="flex align-middle items-center justify-between">
+                  <img
+                    src={
+                      getDisplayUser(conversation)?.profile.image
+                        ? getDisplayUser(conversation).profile.image
+                        : defaultImg
+                    }
+                    className="w-10 h-10 rounded-full"
+                    alt="conversation-profile"
+                  />
+                  <div className="ml-5 flex-1 flex-col ">
+                    <div className="text-sm font-semibold">
+                      {`${getDisplayUser(conversation).firstName}`}
+                      {`  ${getDisplayUser(conversation).lastName}`}
+                    </div>
+                    <div className="text-sm text-gray-300 ">
+                      {conversation.lastMessageSent?.content}
                     </div>
                   </div>
+                  <div>
+                    {user && (
+                      <UnreadCountBox
+                        conversationId={conversation.id}
+                        userId={user!.id}
+                      />
+                    )}
+                  </div>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
