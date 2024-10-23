@@ -15,9 +15,9 @@ Before you try to run this project locally, you must have both React&NestJS proj
 - `/login` to login to the app
 - `/conversation` is where all the magic happens
 
-  ## Motivation
-  - I am buildling it to learn how to create a chat program using ReactJS + NextJS
-  - Learn earn how to use Socket.IO
-  - Learn NestJS
-  - Try to create componenets as effectively as possible in React project
+## ⭐ Motivation
+- I am buildling it to learn how to create a chat program using ReactJS + NextJS
+- Learn earn how to use Socket.IO
+- Learn NestJS
+- Try to create componenets as effectively as possible in React project
   
