@@ -3,9 +3,9 @@ import { MessageInputField } from "./MessageInputField";
 import { MessagePanelHeader } from "./MessagePanelHeader";
 import { useParams } from "react-router-dom";
 import { MessageContainer } from "./MessageContainer";
-import { postNewMessage } from "../../utils/api";
-import { setConversationLastMessage } from "../../store/conversationSlice";
+import { postNewMessage } from "../../utils/apis/apis";
 import { useDispatch } from "react-redux";
+import { setConversationLastMessage } from "../../store/conversationSlice";
 
 type Props = {};
 

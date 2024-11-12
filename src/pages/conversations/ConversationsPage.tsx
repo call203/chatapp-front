@@ -1,35 +1,52 @@
 import { Outlet, useParams } from "react-router-dom";
 import { ConversationSideBar } from "../../components/conversation/ConversationSidebar";
-import { useContext, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { ConversationPanel } from "../../components/conversation/ConversationPanel";
 import { useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../store";
+import { useSelector } from "react-redux";
+import { socket } from "../../utils/context/SocketContext";
+import { ConversationType, MessageEventPayload } from "../../utils/types";
+import { useQuery } from "react-query";
+import { getConversationMessages } from "../../utils/apis/apis";
 import {
   addConversation,
   fetchConversationThunk
 } from "../../store/conversationSlice";
-import { useSelector } from "react-redux";
-import { addMessage, fetchMessagesThunk } from "../../store/messageSlice";
-import { socket } from "../../utils/context/SocketContext";
-import { ConversationType, MessageEventPayload } from "../../utils/types";
-import { AuthContext } from "../../utils/context/AuthContext";
+import useMessageStore from "../../store/messageStore";
 
 export const ConversationPage = () => {
   const { id } = useParams();
-  const { user } = useContext(AuthContext);
   const dispatch = useDispatch<AppDispatch>();
   const conversations = useSelector((state: RootState) => state.conversation);
+  const { setMessages, addMessage } = useMessageStore();
+  const fetchMessages = useCallback(
+    () => getConversationMessages(Number(id)),
+    [id]
+  );
+  const { data, isLoading } = useQuery(
+    ["messages", id],
+    () => fetchMessages(),
+    {
+      enabled: !!id,
+      cacheTime: 1000 * 60 * 5 // 5 minutes
+    }
+  );
+
+  useEffect(() => {
+    if (data) {
+      setMessages(data.data);
+    }
+  }, [data, setMessages]);
 
   useEffect(() => {
     dispatch(fetchConversationThunk());
   }, []);
 
-  useEffect(() => {
-    if (id) {
-      const coversationId = parseInt(id);
-      dispatch(fetchMessagesThunk(coversationId));
-    }
-  }, [id]);
+  const memoizedConverseations = useMemo(
+    () => conversations.conversations,
+    [conversations.conversations]
+  );
 
   useEffect(() => {
     const conversationId = id!;
@@ -39,17 +56,15 @@ export const ConversationPage = () => {
 
     socket.on("onMessage", (payload: MessageEventPayload) => {
       const { conversation, message } = payload;
-
+      addMessage(payload);
       //update the last read message
-      if (conversation.id === Number(id)) {
-        socket.emit("TEST", {
-          user: user,
-          conversation: conversation,
-          message: message
-        });
-      }
-
-      dispatch(addMessage(payload));
+      // if (conversation.id === Number(id)) {
+      //   socket.emit("TEST", {
+      //     user: user,
+      //     conversation: conversation,
+      //     message: message
+      //   });
+      // }
     });
 
     socket.on("onConversation", (payload: ConversationType) => {
@@ -71,8 +86,8 @@ export const ConversationPage = () => {
     <div className="flex flex-col h-screen">
       <div className="flex flex-1 overflow-y-auto">
         <ConversationSideBar
-          conversations={conversations.conversations}
-          loading={conversations.loading}
+          conversations={memoizedConverseations}
+          loading={isLoading}
         />
         <div className="flex-1">
           {!id && <ConversationPanel />}
