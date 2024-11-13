@@ -19,7 +19,7 @@ const useProfileStore = create<ProfileState>((set) => ({
 
 export default useProfileStore;
 
-//REDUX
+//************************EDUX************************//
 /*import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { User } from '../utils/types'
 import { create } from 'zustand'

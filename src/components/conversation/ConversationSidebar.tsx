@@ -50,34 +50,32 @@ export const ConversationSideBar: FC<Props> = ({ conversations, loading }) => {
           {/** Conversations */}
           {conversations.map((conversation) => {
             return (
-              <>
-                <div
-                  className="overflow-y-auto py-4"
-                  key={conversation.id}
-                  onClick={() => navigate(`/conversations/${conversation.id}`)}
-                >
-                  <div className="flex align-middle items-center">
-                    <img
-                      src={
-                        getDisplayUser(conversation)?.profile.image
-                          ? getDisplayUser(conversation).profile.image
-                          : defaultImg
-                      }
-                      className="w-10 h-10 rounded-full"
-                      alt="conversation-profile"
-                    />
-                    <div className="ml-5">
-                      <div className="text-sm font-semibold">
-                        {`${getDisplayUser(conversation).firstName}`}
-                        {`  ${getDisplayUser(conversation).lastName}`}
-                      </div>
-                      <div className="text-sm text-gray-300 ">
-                        {conversation.lastMessageSent?.content}
-                      </div>
+              <div
+                className="overflow-y-auto py-4"
+                key={conversation.id}
+                onClick={() => navigate(`/conversations/${conversation.id}`)}
+              >
+                <div className="flex align-middle items-center">
+                  <img
+                    src={
+                      getDisplayUser(conversation)?.profile.image
+                        ? getDisplayUser(conversation).profile.image
+                        : defaultImg
+                    }
+                    className="w-10 h-10 rounded-full"
+                    alt="conversation-profile"
+                  />
+                  <div className="ml-5">
+                    <div className="text-sm font-semibold">
+                      {`${getDisplayUser(conversation).firstName}`}
+                      {`  ${getDisplayUser(conversation).lastName}`}
+                    </div>
+                    <div className="text-sm text-gray-300 ">
+                      {conversation.lastMessageSent?.content}
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>

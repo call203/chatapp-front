@@ -53,6 +53,7 @@ export const UserSidebar = () => {
           {userSidebarItems.map((item) => {
             return (
               <div
+                key={item.id}
                 className={`relative ${item.id === "friend" && "bg-blue-100"}`}
               >
                 {item.id === "friends" && <RequestNumber />}

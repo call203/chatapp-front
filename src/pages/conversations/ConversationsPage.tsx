@@ -2,51 +2,53 @@ import { Outlet, useParams } from "react-router-dom";
 import { ConversationSideBar } from "../../components/conversation/ConversationSidebar";
 import { useCallback, useEffect, useMemo } from "react";
 import { ConversationPanel } from "../../components/conversation/ConversationPanel";
-import { useDispatch } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { useSelector } from "react-redux";
 import { socket } from "../../utils/context/SocketContext";
 import { ConversationType, MessageEventPayload } from "../../utils/types";
 import { useQuery } from "react-query";
-import { getConversationMessages } from "../../utils/apis/apis";
 import {
-  addConversation,
-  fetchConversationThunk
-} from "../../store/conversationSlice";
+  getConversationMessages,
+  getConversations
+} from "../../utils/apis/apis";
 import useMessageStore from "../../store/messageStore";
+import useConversationStore from "../../store/conversationStore";
 
 export const ConversationPage = () => {
   const { id } = useParams();
-  const dispatch = useDispatch<AppDispatch>();
-  const conversations = useSelector((state: RootState) => state.conversation);
+  const { conversations, fetchConversation, addConversation } =
+    useConversationStore();
   const { setMessages, addMessage } = useMessageStore();
   const fetchMessages = useCallback(
     () => getConversationMessages(Number(id)),
     [id]
   );
-  const { data, isLoading } = useQuery(
+
+  const { data: conversationsData, isLoading: isLoadingConversations } =
+    useQuery(["conversations"], () => getConversations(), {
+      cacheTime: 1000 * 60 * 5 // 5 minutes
+    });
+
+  const { data: messageData } = useQuery(
     ["messages", id],
     () => fetchMessages(),
     {
-      enabled: !!id,
+      enabled: !!id && !!conversationsData,
       cacheTime: 1000 * 60 * 5 // 5 minutes
     }
   );
 
   useEffect(() => {
-    if (data) {
-      setMessages(data.data);
+    if (messageData) {
+      setMessages(messageData.data);
     }
-  }, [data, setMessages]);
+  }, [messageData, setMessages]);
 
   useEffect(() => {
-    dispatch(fetchConversationThunk());
-  }, []);
+    if (conversationsData) {
+      fetchConversation(conversationsData.data);
+    }
+  }, [conversationsData, fetchConversation]);
 
-  const memoizedConverseations = useMemo(
-    () => conversations.conversations,
-    [conversations.conversations]
-  );
+  const memoizedConverseations = useMemo(() => conversations, [conversations]);
 
   useEffect(() => {
     const conversationId = id!;
@@ -69,8 +71,7 @@ export const ConversationPage = () => {
 
     socket.on("onConversation", (payload: ConversationType) => {
       console.log("Conversation Event");
-      console.log(payload);
-      dispatch(addConversation(payload));
+      addConversation(payload);
     });
 
     socket.emit("onConversationJoin", { conversationId });
@@ -87,7 +88,7 @@ export const ConversationPage = () => {
       <div className="flex flex-1 overflow-y-auto">
         <ConversationSideBar
           conversations={memoizedConverseations}
-          loading={isLoading}
+          loading={isLoadingConversations}
         />
         <div className="flex-1">
           {!id && <ConversationPanel />}

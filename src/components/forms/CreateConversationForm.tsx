@@ -2,10 +2,10 @@ import { FC } from "react";
 import { MainButton } from "../MainButton";
 import { CreateConversationParams } from "../../utils/types";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store";
+import useConversationStore from "../../store/conversationStore";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { createConversationThunk } from "../../store/conversationSlice";
+import { postNewConversation } from "../../utils/apis/apis";
 
 type Props = {
   onClose: () => void;
@@ -16,17 +16,21 @@ export const CreateConversationForm: FC<Props> = ({ onClose }) => {
     handleSubmit,
     formState: { errors }
   } = useForm<CreateConversationParams>({});
-  const dispatch = useDispatch<AppDispatch>();
+  const { addConversation } = useConversationStore();
   const navigate = useNavigate();
+  const { mutate: mutateNewConversation } = useMutation(postNewConversation, {
+    onSuccess: (response) => {
+      addConversation(response.data);
+      onClose();
+      navigate(`/conversations/${response?.data.id}`);
+    },
+    onError: (err) => {
+      console.log(err);
+    }
+  });
 
   const onSubmit = (data: CreateConversationParams) => {
-    dispatch(createConversationThunk(data))
-      .unwrap()
-      .then(({ data }) => {
-        onClose();
-        navigate(`/conversations/${data.id}`);
-      })
-      .catch((err) => console.log(err));
+    mutateNewConversation(data);
   };
 
   return (

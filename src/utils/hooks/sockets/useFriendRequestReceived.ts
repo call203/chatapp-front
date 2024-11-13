@@ -1,29 +1,32 @@
-import { useContext, useEffect } from 'react'
-import { SocketContext } from '../../context/SocketContext'
-import { FriendRequest } from '../../types'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../../store'
-import {
-  addFriendRequest,
-  fetchFriendsRequestThunk,
-} from '../../../store/friendSlice'
-import { useToast } from '../useToast'
+import { useContext, useEffect } from "react";
+import { SocketContext } from "../../context/SocketContext";
+import { FriendRequest } from "../../types";
+import { useToast } from "../useToast";
+import useFriendStore from "../../../store/friendStore";
+import { useQuery } from "react-query";
+import { getRequestFriend } from "../../apis/apis";
 
 export function useFriendRequestReceived() {
-  const socket = useContext(SocketContext)
-  const dispatch = useDispatch<AppDispatch>()
-  const { info } = useToast({ theme: 'dark', position: 'bottom-left' })
+  const socket = useContext(SocketContext);
+  const { fetchFriendRequests, addFriendRequest } = useFriendStore();
+
+  const { info } = useToast({ theme: "dark", position: "bottom-left" });
+  const { refetch } = useQuery(["friendRequests"], () => getRequestFriend(), {
+    enabled: false,
+    onSuccess: (res) => {
+      fetchFriendRequests(res.data);
+    }
+  });
 
   useEffect(() => {
-    dispatch(fetchFriendsRequestThunk())
-
-    socket.on('onFriendRequestReceived', (payload: FriendRequest) => {
-      dispatch(addFriendRequest(payload))
-      info(`Incoming Friend Request from ${payload.sender.firstName}`)
-    })
-  }, [])
+    refetch();
+    socket.on("onFriendRequestReceived", (payload: FriendRequest) => {
+      addFriendRequest(payload);
+      info(`Incoming Friend Request from ${payload.sender.firstName}`);
+    });
+  }, []);
 
   return () => {
-    socket.off('onFriendRequestReceived')
-  }
+    socket.off("onFriendRequestReceived");
+  };
 }

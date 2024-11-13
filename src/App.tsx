@@ -10,8 +10,6 @@ import React, { PropsWithChildren, useState } from "react";
 import { ConversationChannelPage } from "./pages/conversations/ConversationChannelPage";
 import { SocketContext, socket } from "./utils/context/SocketContext";
 import { Socket } from "socket.io-client";
-import { Provider as ReduxProvider } from "react-redux";
-import { store } from "./store";
 import { AppPage } from "./pages/AppPage";
 import { ToastContainer } from "react-toastify";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
@@ -42,13 +40,11 @@ function AppWithProviders({
 }: PropsWithChildren & Props) {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReduxProvider store={store}>
-        <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
-          <SocketContext.Provider value={socket}>
-            {children}
-          </SocketContext.Provider>
-        </AuthContext.Provider>
-      </ReduxProvider>
+      <AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
+        <SocketContext.Provider value={socket}>
+          {children}
+        </SocketContext.Provider>
+      </AuthContext.Provider>
     </QueryClientProvider>
   );
 }

@@ -1,18 +1,17 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { MessageInputField } from "./MessageInputField";
 import { MessagePanelHeader } from "./MessagePanelHeader";
 import { useParams } from "react-router-dom";
 import { MessageContainer } from "./MessageContainer";
 import { postNewMessage } from "../../utils/apis/apis";
-import { useDispatch } from "react-redux";
-import { setConversationLastMessage } from "../../store/conversationSlice";
+import useConversationStore from "../../store/conversationStore";
 
 type Props = {};
 
 export const MesasgePanel: FC<Props> = ({}) => {
   const [content, setContent] = useState("");
   const { id } = useParams();
-  const dispatch = useDispatch();
+  const { setConversationLastMessage } = useConversationStore();
 
   const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +28,7 @@ export const MesasgePanel: FC<Props> = ({}) => {
   };
 
   const updateLastMessage = () => {
-    dispatch(setConversationLastMessage({ id: Number(id), content }));
+    setConversationLastMessage({ id: Number(id), content });
   };
 
   return (

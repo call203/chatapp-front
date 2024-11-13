@@ -1,21 +1,15 @@
 import { create } from "zustand";
-import {
-  ConversationMessagesType,
-  MessageEventPayload,
-  MessageType
-} from "../utils/types";
+import { ConversationMessagesType, MessageEventPayload } from "../utils/types";
 
 //ZUSTAND
 interface MessageState {
   messages: ConversationMessagesType[];
-  loading: boolean;
   setMessages: (messages: ConversationMessagesType) => void;
   addMessage: (payload: MessageEventPayload) => void;
 }
 
 const useMessageStore = create<MessageState>((set) => ({
   messages: [],
-  loading: false,
   setMessages: (payload) =>
     set((state) => {
       const { conversationId } = payload;

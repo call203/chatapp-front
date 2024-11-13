@@ -1,36 +1,62 @@
-import { FC, useContext } from 'react'
-import { AuthContext } from '../../utils/context/AuthContext'
-import { getFriendRequestDetails } from '../../utils/helper'
-import { FriendRequest } from '../../utils/types'
-import DefaultProfile from '../../Assets/DefaultProfile.png'
-import { FriendRequestIcon } from './FriendRequestIcon'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../store'
+import { FC, useContext } from "react";
+import { AuthContext } from "../../utils/context/AuthContext";
+import { getFriendRequestDetails } from "../../utils/helper";
+import { FriendRequest } from "../../utils/types";
+import DefaultProfile from "../../Assets/DefaultProfile.png";
+import { FriendRequestIcon } from "./FriendRequestIcon";
+
+import { useMutation } from "react-query";
 import {
-  acceptFriendRequestThunk,
-  cancelFriendRequestThunk,
-  rejectFriendRequestThunk,
-} from '../../store/friendSlice'
+  deletecancelRequestFriend,
+  patchAcceptRequestFriend,
+  patchRejectRequestFriend
+} from "../../utils/apis/apis";
+import useFriendStore from "../../store/friendStore";
 
 type Props = {
-  friendRequestDetail: FriendRequest
-}
+  friendRequestDetail: FriendRequest;
+};
 export const FriendRequestItem: FC<Props> = ({ friendRequestDetail }) => {
-  const { user } = useContext(AuthContext)
-  const friendDetail = getFriendRequestDetails(friendRequestDetail, user)
-  const dispatch = useDispatch<AppDispatch>()
+  const { user } = useContext(AuthContext);
+  const friendDetail = getFriendRequestDetails(friendRequestDetail, user);
+  const { removeFriendRequest, addFriend } = useFriendStore();
+  const { mutate: acceptFriendRequestMutation } = useMutation(
+    patchAcceptRequestFriend,
+    {
+      onSuccess: (res) => {
+        removeFriendRequest(res.data.friendRequest);
+        addFriend(res.data.friend);
+      }
+    }
+  );
+  const { mutate: rejectFriendReqeuest } = useMutation(
+    patchRejectRequestFriend,
+    {
+      onSuccess: (res) => {
+        removeFriendRequest(res.data);
+      }
+    }
+  );
+  const { mutate: cancelFriendRequest } = useMutation(
+    deletecancelRequestFriend,
+    {
+      onSuccess: (res) => {
+        removeFriendRequest(res.data);
+      }
+    }
+  );
 
   const handleFriendRequest = (type?: string) => {
-    const { id } = friendRequestDetail
+    const { id } = friendRequestDetail;
     switch (type) {
-      case 'accept':
-        return dispatch(acceptFriendRequestThunk(id))
-      case 'reject':
-        return dispatch(rejectFriendRequestThunk(id))
+      case "accept":
+        return acceptFriendRequestMutation(id);
+      case "reject":
+        return rejectFriendReqeuest(id);
       default:
-        return dispatch(cancelFriendRequestThunk(id))
+        return cancelFriendRequest(id);
     }
-  }
+  };
 
   return (
     <>
@@ -63,5 +89,5 @@ export const FriendRequestItem: FC<Props> = ({ friendRequestDetail }) => {
         </div>
       </li>
     </>
-  )
-}
+  );
+};
