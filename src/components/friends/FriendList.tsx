@@ -52,6 +52,7 @@ export const FriendList = () => {
           return (
             <>
               <li
+                key={idx}
                 className={`flex flex-row py-4  items-center ${
                   overIdx === idx ? "bg-slate-900" : "bg-transparent"
                 }`}
