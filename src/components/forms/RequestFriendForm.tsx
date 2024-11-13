@@ -1,37 +1,41 @@
-import { FC, useEffect } from 'react'
-import { MainButton } from '../MainButton'
-import { useForm } from 'react-hook-form'
+import { FC } from "react";
+import { MainButton } from "../MainButton";
+import { useForm } from "react-hook-form";
 import {
   CreateConversationParams,
-  RequestFriendParams,
-} from '../../utils/types'
-import { ErrorMessage } from '@hookform/error-message'
-import { useToast } from '../../utils/hooks/useToast'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../store'
-import { createFriendRequestThunk } from '../../store/friendSlice'
+  RequestFriendParams
+} from "../../utils/types";
+import { ErrorMessage } from "@hookform/error-message";
+import { useToast } from "../../utils/hooks/useToast";
+import { useMutation } from "react-query";
+import { postRequestFriend } from "../../utils/apis/apis";
+import useFriendStore from "../../store/friendStore";
+
 type Props = {
-  onClose: () => void
-}
+  onClose: () => void;
+};
 export const RequestFriendForm: FC<Props> = ({ onClose }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<CreateConversationParams>({})
- const {success, showError} = useToast()
-
-  const dispatch = useDispatch<AppDispatch>()
-  const onSubmit = async (data: RequestFriendParams) => {
-    try {
-      const res = await dispatch(createFriendRequestThunk(data)).unwrap();
-      console.log(res); 
-      success('send!');
+    formState: { errors }
+  } = useForm<CreateConversationParams>({});
+  const { success, showError } = useToast();
+  const { addFriendRequest } = useFriendStore();
+  const { mutate: createFriendRequestMutate } = useMutation(postRequestFriend, {
+    onSuccess: (res) => {
+      addFriendRequest(res);
+      success("send!");
       onClose();
-    } catch (error:string|any) {
-      const errorMsg = error as string
-      showError(errorMsg); 
+    },
+    onError: (err) => {
+      const errorMsg = err as string;
+      showError(errorMsg);
     }
+  });
+
+  const onSubmit = async (data: RequestFriendParams) => {
+    createFriendRequestMutate(data);
   };
 
   return (
@@ -41,8 +45,8 @@ export const RequestFriendForm: FC<Props> = ({ onClose }) => {
           <div className="text-xsm mb-1 text-gray-200">Email</div>
           <input
             className="bg-inherit text-white text-sm w-full"
-            style={{ border: 'none', outline: 'none' }}
-            {...register('email', { required: 'Email is required' })}
+            style={{ border: "none", outline: "none" }}
+            {...register("email", { required: "Email is required" })}
           />
         </div>
         <div className="pb-5 text-my_orange">
@@ -55,5 +59,5 @@ export const RequestFriendForm: FC<Props> = ({ onClose }) => {
       </section>
       <MainButton>Send</MainButton>
     </form>
-  )
-}
+  );
+};

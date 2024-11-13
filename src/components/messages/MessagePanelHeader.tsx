@@ -1,29 +1,34 @@
-import { useParams } from 'react-router-dom'
-import { getRecipientFromConversation } from '../../utils/helper'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store'
-import { selectConversationById } from '../../store/conversationSlice'
-import { useContext } from 'react'
-import { AuthContext } from '../../utils/context/AuthContext'
-import DefaultProfile from '../../Assets/DefaultProfile.png'
-import { useDispatch } from 'react-redux'
-import { setProfileInfo, toggleProfile } from '../../store/profileSlice'
+import { useParams } from "react-router-dom";
+import { getRecipientFromConversation } from "../../utils/helper";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../utils/context/AuthContext";
+import DefaultProfile from "../../Assets/DefaultProfile.png";
+import useProfileStore from "../../store/ProfileStore";
+import useConversationStore from "../../store/conversationStore";
+import { User } from "../../utils/types";
 
 export const MessagePanelHeader = () => {
-  const { id } = useParams()
-  const dispatch = useDispatch()
-  const user = useContext(AuthContext).user!
-  const conversation = useSelector((state: RootState) =>
-    selectConversationById(state, Number(id)),
-  )
-  const recipient = getRecipientFromConversation(conversation, user)
+  const { id } = useParams();
+  const user = useContext(AuthContext).user!;
+  const { selectConversationById } = useConversationStore();
+  const [recipient, setRecipient] = useState<User | undefined>();
+  const { toggleProfile, setProfileInfo } = useProfileStore();
+
+  useEffect(() => {
+    if (id) {
+      const conversation = selectConversationById(Number(id));
+      const recipientData = getRecipientFromConversation(conversation, user);
+      setRecipient(recipientData);
+      console.log(recipientData);
+    }
+  }, [id]);
 
   const handleProfile = () => {
     if (recipient) {
-      dispatch(toggleProfile())
-      dispatch(setProfileInfo(recipient))
+      toggleProfile();
+      setProfileInfo(recipient);
     }
-  }
+  };
 
   return (
     <div className="bg-b_131313 flex items-center py-3 px-5 text-white">
@@ -38,5 +43,5 @@ export const MessagePanelHeader = () => {
         {recipient?.firstName} {recipient?.lastName}
       </div>
     </div>
-  )
-}
+  );
+};

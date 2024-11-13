@@ -1,31 +1,31 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   InputContainer,
   InputField,
-  InputLabel,
-} from '../../utils/styles'
-import styles from './index.module.scss'
-import { useForm } from 'react-hook-form'
-import { LoginParams } from '../../utils/types'
-import { postLoginUser } from '../../utils/api'
+  InputLabel
+} from "../../utils/styles";
+import styles from "./index.module.scss";
+import { useForm } from "react-hook-form";
+import { LoginParams } from "../../utils/types";
+import { postLoginUser } from "../../utils/apis/apis";
 export const LoginForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<LoginParams>()
-  const navigate = useNavigate()
+    formState: { errors }
+  } = useForm<LoginParams>();
+  const navigate = useNavigate();
 
   const onSubmitLogin = async (data: LoginParams) => {
     try {
-      await postLoginUser(data)
-      navigate('/conversations')
-      window.location.reload()
+      await postLoginUser(data);
+      navigate("/conversations");
+      window.location.reload();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmitLogin)}>
@@ -34,7 +34,7 @@ export const LoginForm = () => {
         <InputField
           type="email"
           id="email"
-          {...register('email', { required: 'Email is required' })}
+          {...register("email", { required: "Email is required" })}
         ></InputField>
       </InputContainer>
       <InputContainer className={styles.loginFormPassword}>
@@ -42,7 +42,7 @@ export const LoginForm = () => {
         <InputField
           type="password"
           id="password"
-          {...register('password', { required: 'Password is required' })}
+          {...register("password", { required: "Password is required" })}
         ></InputField>
       </InputContainer>
       <Button>Login</Button>
@@ -51,5 +51,5 @@ export const LoginForm = () => {
         <Link to="/signup">Register</Link>
       </div>
     </form>
-  )
-}
+  );
+};

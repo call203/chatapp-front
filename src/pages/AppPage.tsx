@@ -1,50 +1,48 @@
-import { Outlet } from 'react-router-dom'
-import { UserSidebar } from '../components/Bar/UserSidebar'
-import { ProfileContainer } from '../components/profile/ProfileContainer'
-import { useContext, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../store'
-import { useFriendRequestReceived } from '../utils/hooks/sockets/useFriendRequestReceived'
-import { SocketContext } from '../utils/context/SocketContext'
-import { useDispatch } from 'react-redux'
-import { addFriend, removeFriendRequest } from '../store/friendSlice'
-import { FriendRequest, AcceptFriendRequestResponse } from '../utils/types'
-import { useToast } from '../utils/hooks/useToast'
+import { Outlet } from "react-router-dom";
+import { UserSidebar } from "../components/Bar/UserSidebar";
+import { ProfileContainer } from "../components/profile/ProfileContainer";
+import { useContext, useEffect } from "react";
+import { useFriendRequestReceived } from "../utils/hooks/sockets/useFriendRequestReceived";
+import { SocketContext } from "../utils/context/SocketContext";
+import { FriendRequest, AcceptFriendRequestResponse } from "../utils/types";
+import { useToast } from "../utils/hooks/useToast";
+import useProfileStore from "../store/ProfileStore";
+import useFriendStore from "../store/friendStore";
 
 export const AppPage = () => {
-  const profile = useSelector((state: RootState) => state.profile.open)
-  const socket = useContext(SocketContext)
-  const dispatch = useDispatch<AppDispatch>()
-  const { info } = useToast({ theme: 'dark', position: 'bottom-left' })
+  const profile = useProfileStore((state) => state.open);
+  const socket = useContext(SocketContext);
+  const { info } = useToast({ theme: "dark", position: "bottom-left" });
+  const { removeFriendRequest, addFriend } = useFriendStore();
 
   useEffect(() => {
-    socket.on('onFriendRequestCancelled', (payload: FriendRequest) => {
-      dispatch(removeFriendRequest(payload))
-    })
+    socket.on("onFriendRequestCancelled", (payload: FriendRequest) => {
+      removeFriendRequest(payload);
+    });
 
     socket.on(
-      'onFriendRequestAccepted',
+      "onFriendRequestAccepted",
       (payload: AcceptFriendRequestResponse) => {
-        dispatch(removeFriendRequest(payload.friendRequest))
+        removeFriendRequest(payload.friendRequest);
         info(
-          `${payload.friendRequest.receiver.firstName} accepted your friend request`,
-        )
-        dispatch(addFriend(payload.friend))
-      },
-    )
-    socket.on('onFriendRequestRejected', (payload: FriendRequest) => {
-      dispatch(removeFriendRequest(payload))
-    })
+          `${payload.friendRequest.receiver.firstName} accepted your friend request`
+        );
+        addFriend(payload.friend);
+      }
+    );
+    socket.on("onFriendRequestRejected", (payload: FriendRequest) => {
+      removeFriendRequest(payload);
+    });
 
     return () => {
-      socket.off('onFriendRequestCancelled')
-      socket.off('onFriendRequestRejected')
-      socket.off('onFriendRequestReceived')
-      socket.off('onFriendRequestAccepted')
-    }
-  }, [socket])
+      socket.off("onFriendRequestCancelled");
+      socket.off("onFriendRequestRejected");
+      socket.off("onFriendRequestReceived");
+      socket.off("onFriendRequestAccepted");
+    };
+  }, [socket]);
 
-  useFriendRequestReceived()
+  useFriendRequestReceived();
   return (
     <div className="flex flex-col h-screen bg-background">
       <div className="flex flex-1 overflow-y-auto flex-col md:flex-row ">
@@ -55,5 +53,5 @@ export const AppPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

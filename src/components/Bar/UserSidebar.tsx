@@ -1,44 +1,43 @@
-import LogoutImg from '../../Assets/Logout.png'
-import DefaultProfile from '../../Assets/DefaultProfile.png'
-import { userSidebarItems } from '../../utils/constants'
-import { postLogoutUser } from '../../utils/api'
-import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
-import { AuthContext } from '../../utils/context/AuthContext'
-import { setProfileInfo, toggleProfile } from '../../store/profileSlice'
-import { useDispatch } from 'react-redux'
-import { RequestNumber } from './RequestNumber'
+import LogoutImg from "../../Assets/Logout.png";
+import DefaultProfile from "../../Assets/DefaultProfile.png";
+import { userSidebarItems } from "../../utils/constants";
+import { postLogoutUser } from "../../utils/apis/apis";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../utils/context/AuthContext";
+import useProfileStore from "../../store/ProfileStore";
+import { RequestNumber } from "./RequestNumber";
 
 export const UserSidebar = () => {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const { setProfileInfo, toggleProfile } = useProfileStore();
 
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const getImage = (path: string) => {
     try {
-      return require(`../../Assets${path}`)
+      return require(`../../Assets${path}`);
     } catch (err) {
-      console.error(`Error loading image at path: ../../Assets${path}`, err)
-      return null
+      console.error(`Error loading image at path: ../../Assets${path}`, err);
+      return null;
     }
-  }
+  };
 
   const logoutUser = () => {
     postLogoutUser().then(() => {
       try {
-        navigate('/login')
+        navigate("/login");
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    })
-  }
+    });
+  };
 
   const handleProfile = () => {
     if (user) {
-      dispatch(setProfileInfo(user))
-      dispatch(toggleProfile())
+      setProfileInfo(user);
+      toggleProfile();
     }
-  }
+  };
 
   return (
     <div className="md:w-20  w-full flex flex-row md:flex-col bg-background_dark1 justify-between md:h-full absolute bottom-0 md:static md:bottom-auto md:py-5">
@@ -54,9 +53,10 @@ export const UserSidebar = () => {
           {userSidebarItems.map((item) => {
             return (
               <div
-                className={`relative ${item.id === 'friend' && 'bg-blue-100'}`}
+                key={item.id}
+                className={`relative ${item.id === "friend" && "bg-blue-100"}`}
               >
-                {item.id === 'friends' && <RequestNumber />}
+                {item.id === "friends" && <RequestNumber />}
                 <div
                   key={item.id}
                   className={`flex justify-center items-center py-5 px-5`}
@@ -69,11 +69,11 @@ export const UserSidebar = () => {
                   />
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </div>
-      <div className={'md:flex justify-center items-center hidden'}>
+      <div className={"md:flex justify-center items-center hidden"}>
         <img
           onClick={() => logoutUser()}
           src={LogoutImg}
@@ -81,5 +81,5 @@ export const UserSidebar = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};

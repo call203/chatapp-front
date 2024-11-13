@@ -1,17 +1,17 @@
-import { useSelector } from 'react-redux'
-import { FriendsPageNavBar } from '../../components/Bar/FriendsPageNavBar'
-import { FriendsPage } from './FriendsPage'
-import { RootState } from '../../store'
-import { useState } from 'react'
-import { MainButton } from '../../components/MainButton'
-import { RequestFriendModal } from '../../components/Modal/RequestFriendModal'
-import { useDisclosure } from '@chakra-ui/react'
-import { FriendRequestList } from '../../components/friends/FriendRequestList'
+import { FriendsPageNavBar } from "../../components/Bar/FriendsPageNavBar";
+import { FriendsPage } from "./FriendsPage";
+import { useState } from "react";
+import { MainButton } from "../../components/MainButton";
+import { RequestFriendModal } from "../../components/Modal/RequestFriendModal";
+import { useDisclosure } from "@chakra-ui/react";
+import { FriendRequestList } from "../../components/friends/FriendRequestList";
+import useFriendStore from "../../store/friendStore";
 
 export const FriendsLayoutPage = () => {
-  const friends = useSelector((state: RootState) => state.friend).friends
-  const [navId, setNavId] = useState<number>(0)
-  const { isOpen, onClose, onOpen } = useDisclosure()
+  // const friends = useSelector((state: RootState) => state.friend).friends
+  const { friends } = useFriendStore();
+  const [navId, setNavId] = useState<number>(0);
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
   return (
     <div className="flex flex-col px-5 pt-10 h-full ">
@@ -39,5 +39,5 @@ export const FriendsLayoutPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
