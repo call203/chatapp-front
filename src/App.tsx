@@ -14,9 +14,15 @@ import { AppPage } from "./pages/AppPage";
 import { ToastContainer } from "react-toastify";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { FriendsLayoutPage } from "./pages/friends/FriendsLayoutPage";
+// import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: false },
+    mutations: { retry: false }
+  }
+});
 const theme = extendTheme({
   styles: {
     global: {

@@ -1,10 +1,10 @@
-import { RegisterForm } from '../components/forms/RegisterForm'
-import { Page } from '../utils/styles'
+import { RegisterForm } from "../components/forms/RegisterForm";
+import { Page } from "../utils/styles";
 
 export const RegisterPage = () => {
   return (
-    <Page display="flex" justifyContent="center" alignItems="center">
+    <Page display="flex" justifycontent="center" alignitems="center">
       <RegisterForm />
     </Page>
-  )
-}
+  );
+};
